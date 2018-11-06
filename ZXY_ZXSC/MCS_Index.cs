@@ -23,30 +23,48 @@ namespace ZXY_ZXSC
             //this.Text += System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             //checkUpdate();//检查更新
         }
-        public int type = 0;//0：路线  1：产品  2：订单
-        public string url = ConfigurationManager.AppSettings["url"];
-        private string cpurl = "";
-        private string routeUrl = "";
-        private string ddUrl = "";
-        public string cpdetailsUrl = "";
-        private string cpPrintUrl = "";
-        private string ddPrintUrl = "";
-        DataTable mytableDD = new DataTable();//打印表的产品
-        private DataTable dataCp = new DataTable();
+
+        // 0：路线  1：产品  2：订单
+        public int type = 0;
+
+        // 网络基本网络地址
+        public string baseURL = ConfigurationManager.AppSettings["url"];
+        // 路线列表
+        private string routeURL = "";
+        // 按产品请求数据的
+        private string sortByProductURL = "";
+        // 订单列表
+        private string sortByOrderURL = "";
+        // 按产品分拣, 单个产品分拣确认
+        public string sortByProductCheckURL = "";
+        // 预打印拣货单(按产品)
+        private string prePrintProductURL = "";
+        // 订单详情
+        private string orderDetailURL = "";
+
+        // 打印表的产品
+        DataTable mytableDD = new DataTable();
+        // 产品表
+        private DataTable productTable = new DataTable();
+
         private DataTable tableProduct = new DataTable();
+
         private DataTable tableCPprint = new DataTable();
+
         private DataTable tableDD = new DataTable();
+
         private DataTable tableCP = new DataTable();
+
         private void MCS_DDLBForm_Load(object sender, EventArgs e)
         {
             #region 按产品数据表
-            
-            dataCp.Columns.Add("产品编号");
-            dataCp.Columns.Add("产品名称");
-            dataCp.Columns.Add("单位");
-            dataCp.Columns.Add("保质期");
-            dataCp.Columns.Add("下单数量");
-            dataCp.Columns.Add("产品id");
+
+            productTable.Columns.Add("产品编号");
+            productTable.Columns.Add("产品名称");
+            productTable.Columns.Add("单位");
+            productTable.Columns.Add("保质期");
+            productTable.Columns.Add("下单数量");
+            productTable.Columns.Add("产品id");
             #endregion
 
             #region 按订单数据表
@@ -65,6 +83,7 @@ namespace ZXY_ZXSC
 
             tableDD.Columns.Add("订单编号");
             tableDD.Columns.Add("客户名称");
+
             #region 订单详情
             mytableDD.Columns.Add("产品名称");
             mytableDD.Columns.Add("下单数量");
@@ -79,11 +98,11 @@ namespace ZXY_ZXSC
             #endregion
 
             dataGridView1.RowsDefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            routeUrl = url + "listRouteDesktop.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4";
-            requestGetJson(routeUrl);
+            routeURL = baseURL + "listRouteDesktop.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4";
+            requestGetJson(routeURL);
 
-            cpurl = url + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-            requestGetJson(cpurl);
+            sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+            requestGetJson(sortByProductURL);
 
             #region 按产品分拣单打印
             tableCPprint.Columns.Add("客户名称");
@@ -133,25 +152,26 @@ namespace ZXY_ZXSC
                 {
                     //MessageBox.Show("推荐最多选择5个产品！");
                     try { tableCP.Clear(); tableCP.Columns.Clear(); } catch { }
-                    
+
                     type = 3;
                     tableCPprint.Clear();
-                    cpPrintUrl = url + "sorteOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                    requestGetJson(cpPrintUrl);
+                    prePrintProductURL = baseURL + "sorteOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                    requestGetJson(prePrintProductURL);
                     type = 1;
                     if (tableCPprint.Rows.Count > 0)
                     {
 
                         tableCP.Columns.Add("门店");
                         //使用方法
-                        for (int i=0;i< dataGridView1.Rows.Count;i++)
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
-                            try { 
+                            try
+                            {
                                 if (dataGridView1.Rows[i].Cells["选择"].Value.ToString() == "True")
                                 {
                                     if (tableCP.Columns.Count < 6)
                                     {
-                                        tableCP.Columns.Add(dataGridView1.Rows[i].Cells["产品名称"].Value.ToString()+"("+ dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")");
+                                        tableCP.Columns.Add(dataGridView1.Rows[i].Cells["产品名称"].Value.ToString() + "(" + dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")");
                                     }
                                     else
                                     {
@@ -160,7 +180,7 @@ namespace ZXY_ZXSC
                                     }
                                 }
                             }
-                            catch {continue; }
+                            catch { continue; }
                         }
                         if (tableCP.Columns.Count == 1)
                         {
@@ -173,10 +193,10 @@ namespace ZXY_ZXSC
                         for (int i = 0; i < tableCPprint.Rows.Count; i++)
                         {
                             string customerName = tableCPprint.Rows[i]["客户名称"].ToString();
-                            string prodName = tableCPprint.Rows[i]["产品名称"].ToString()+"("+ tableCPprint.Rows[i]["单位"].ToString() + ")";
+                            string prodName = tableCPprint.Rows[i]["产品名称"].ToString() + "(" + tableCPprint.Rows[i]["单位"].ToString() + ")";
                             double sl = double.Parse(tableCPprint.Rows[i]["下单数量"].ToString());
                             string remark = tableCPprint.Rows[i]["备注"].ToString();
-                            DataRow[] arrChkExist = tableCP.Select("门店='"+customerName+"'");
+                            DataRow[] arrChkExist = tableCP.Select("门店='" + customerName + "'");
 
                             if (tableCP.Columns.Contains(prodName))
                             {
@@ -213,7 +233,7 @@ namespace ZXY_ZXSC
                         }
                         DataRow sumRow = tableCP.NewRow();
                         sumRow["门店"] = "合计";
-                        for(int i = 1; i < tableCP.Columns.Count-1; i++)
+                        for (int i = 1; i < tableCP.Columns.Count - 1; i++)
                         {
                             string ColumnName = tableCP.Columns[i].ToString();
                             double d = 0;
@@ -258,7 +278,7 @@ namespace ZXY_ZXSC
                 {
                     GridReportForm BForm = new GridReportForm();
                     BForm.printtable = myprinttable;
-                    if (type ==1)
+                    if (type == 1)
                     {
                         BForm.reportname = "cp_jhd.grf";
                         type = 1;
@@ -435,7 +455,7 @@ namespace ZXY_ZXSC
                         #endregion
                         case 1:
                             #region 按产品接口
-                            dataCp.Rows.Clear();
+                            productTable.Rows.Clear();
                             ProductData cpData = js.Deserialize<ProductData>(jsonstr);
                             if (cpData.status.ToString().Equals("200"))
                             {
@@ -444,18 +464,18 @@ namespace ZXY_ZXSC
                                 {
                                     for (int i = 0; i < ProductList.Count; i++)
                                     {
-                                        DataRow cprow = dataCp.NewRow();
+                                        DataRow cprow = productTable.NewRow();
                                         cprow["产品编号"] = ProductList[i].ProductCode;
                                         cprow["产品名称"] = ProductList[i].ProductName;
                                         cprow["保质期"] = ProductList[i].QualityTime;
                                         cprow["产品id"] = ProductList[i].ScProductID;
                                         cprow["下单数量"] = ProductList[i].OrderCount + ProductList[i].Unit;
                                         cprow["单位"] = ProductList[i].Unit;
-                                        dataCp.Rows.Add(cprow);
+                                        productTable.Rows.Add(cprow);
                                     }
                                 }
 
-                                yc(dataGridView1, dataCp);
+                                yc(dataGridView1, productTable);
                                 dataGridView1.ClearSelection();
                             }
                             #endregion
@@ -618,7 +638,7 @@ namespace ZXY_ZXSC
                 for (int j = 0; j < dgv.Columns.Count; j++) //写列标题 
                 {
                     strc1 = dgv.Columns[j].Name.ToUpper();
-                    if (strc1 == "选择" )
+                    if (strc1 == "选择")
                     {
                         dgv.Columns[strc1].ReadOnly = false;
                     }
@@ -627,9 +647,9 @@ namespace ZXY_ZXSC
                         dgv.Columns[strc1].ReadOnly = true;
                     }
                     dgv.Columns[strc1].SortMode = DataGridViewColumnSortMode.NotSortable;
-                    
+
                     dgv.Columns[strc1].DefaultCellStyle.BackColor = Color.FromArgb(230, 230, 230);
-                    if (strc1.IndexOf("I") >= 0||strc1.Trim()=="客户电话"|| strc1.Trim()=="单位"||strc1.Trim()=="保质期" || strc1.Trim() == "地址")
+                    if (strc1.IndexOf("I") >= 0 || strc1.Trim() == "客户电话" || strc1.Trim() == "单位" || strc1.Trim() == "保质期" || strc1.Trim() == "地址")
                     {
                         dgv.Columns[strc1].Visible = false;
                     }
@@ -637,7 +657,7 @@ namespace ZXY_ZXSC
                 dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 //自动列宽
             }
-            catch(Exception ex){ }
+            catch (Exception ex) { }
         }
         //rediobutton事件
         private void rioCP_CheckedChanged(object sender, EventArgs e)
@@ -646,15 +666,15 @@ namespace ZXY_ZXSC
             {
                 btn_print.Visible = true;
                 type = 1;
-                cpurl = url + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(cpurl);
+                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByProductURL);
             }
             else if (rioDD.Checked)
             {
                 btn_print.Visible = false;
                 type = 2;
-                ddUrl = url + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(ddUrl);
+                sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByOrderURL);
             }
         }
         //选择路线
@@ -663,14 +683,14 @@ namespace ZXY_ZXSC
             if (rioCP.Checked)
             {
                 type = 1;
-                cpurl = url + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(cpurl);
+                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByProductURL);
             }
-            else if(rioDD.Checked)
+            else if (rioDD.Checked)
             {
                 type = 2;
-                ddUrl=url+ "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(ddUrl);
+                sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByOrderURL);
             }
 
         }
@@ -678,7 +698,7 @@ namespace ZXY_ZXSC
         private void btn_history_Click(object sender, EventArgs e)
         {
             MCS_DDLBListForm mlForm = new MCS_DDLBListForm();
-            mlForm.url=url+ "departmentList.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+            mlForm.url = baseURL + "departmentList.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
             mlForm.ShowDialog();
         }
 
@@ -704,7 +724,7 @@ namespace ZXY_ZXSC
         //                tableDD.Rows.Add(rows);
         //                if (mytableDD.Rows.Count > 0)
         //                {
-                            
+
         //                    DataRow[] cpPrintRow = mytableDD.Select();
 
         //                    print(cpPrintRow);
@@ -772,8 +792,8 @@ namespace ZXY_ZXSC
                         tableDD.Clear();
                         mytableDD.Clear();
                         tableCPprint.Clear();
-                        ddPrintUrl = url + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
-                        requestGetJson(ddPrintUrl);
+                        orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
+                        requestGetJson(orderDetailURL);
                         type = 2;
                         DataRow rows = tableDD.NewRow();
                         rows["订单编号"] = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
@@ -795,8 +815,8 @@ namespace ZXY_ZXSC
                     {
                         type = 4;
                         mytableDD.Clear();
-                        ddPrintUrl = url + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
-                        requestGetJson(ddPrintUrl);
+                        orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
+                        requestGetJson(orderDetailURL);
                         type = 2;
                         MCS_DDLBForm mform = new MCS_DDLBForm();
                         mform.lx = com_lx.Text.ToString();
@@ -805,7 +825,7 @@ namespace ZXY_ZXSC
                         mform.khmc = dataGridView1.Rows[e.RowIndex].Cells["客户名称"].Value.ToString();
                         mform.xdsj = dataGridView1.Rows[e.RowIndex].Cells["下单时间"].Value.ToString();
                         mform.ddbh = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
-                        mform.url = ddPrintUrl;
+                        mform.url = orderDetailURL;
                         //mform.mytableDD = mytableDD;
                         mform.ShowDialog();
                         type = 2;
@@ -814,7 +834,7 @@ namespace ZXY_ZXSC
                 else if (type == 1)
                 {
                     type = 5;
-                    tableCP = dataCp.Copy();
+                    tableCP = productTable.Copy();
                     if (tableCP.Columns.Count == 6)
                     {
                         tableCP.Columns.Add("订单id");
@@ -825,8 +845,8 @@ namespace ZXY_ZXSC
                         tableCP.Columns.Add("分拣确认");
                     }
                     tableCP.Clear();
-                    cpdetailsUrl = url + "sorteByProductCheck.html?isFrom=4&scRouteId=" + com_lx.SelectedValue + "&companyId=" + ConfigurationManager.AppSettings["companyId"] + "&scProductId=" + int.Parse(dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString());
-                    requestGetJson(cpdetailsUrl);
+                    sortByProductCheckURL = baseURL + "sorteByProductCheck.html?isFrom=4&scRouteId=" + com_lx.SelectedValue + "&companyId=" + ConfigurationManager.AppSettings["companyId"] + "&scProductId=" + int.Parse(dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString());
+                    requestGetJson(sortByProductCheckURL);
                     type = 1;
                     MCS_DDLBForm mform = new MCS_DDLBForm();
                     mform.lx = com_lx.Text.ToString();
@@ -852,19 +872,19 @@ namespace ZXY_ZXSC
 
         private void MCS_Index_Activated(object sender, EventArgs e)
         {
-            if (type==1)
+            if (type == 1)
             {
                 btn_print.Visible = true;
                 type = 1;
-                cpurl = url + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(cpurl);
+                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByProductURL);
             }
             else if (type == 2)
             {
                 btn_print.Visible = false;
                 type = 2;
-                ddUrl = url + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(ddUrl);
+                sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByOrderURL);
             }
         }
     }
