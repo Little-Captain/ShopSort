@@ -44,12 +44,15 @@ namespace ZXY_ZXSC
 
         // 打印表的产品
         DataTable mytableDD = new DataTable();
-        // 产品表
+
+        // 首页-产品表
         private DataTable productTable = new DataTable();
 
-        private DataTable tableProduct = new DataTable();
+        // 首页-订单表
+        private DataTable orderTable = new DataTable();
 
-        private DataTable tableCPprint = new DataTable();
+        // 预打印拣货单表(按产品)
+        private DataTable prePrintProductTable = new DataTable();
 
         private DataTable tableDD = new DataTable();
 
@@ -68,16 +71,16 @@ namespace ZXY_ZXSC
             #endregion
 
             #region 按订单数据表
-            tableProduct.Columns.Add("订单编号");
+            orderTable.Columns.Add("订单编号");
 
-            tableProduct.Columns.Add("客户名称");
-            tableProduct.Columns.Add("订单ID");
-            tableProduct.Columns.Add("客户电话");
-            tableProduct.Columns.Add("地址");
-            tableProduct.Columns.Add("下单时间");
-            tableProduct.Columns.Add("状态");
-            tableProduct.Columns.Add("备注");
-            tableProduct.Columns.Add("操作");
+            orderTable.Columns.Add("客户名称");
+            orderTable.Columns.Add("订单ID");
+            orderTable.Columns.Add("客户电话");
+            orderTable.Columns.Add("地址");
+            orderTable.Columns.Add("下单时间");
+            orderTable.Columns.Add("状态");
+            orderTable.Columns.Add("备注");
+            orderTable.Columns.Add("操作");
 
             #endregion
 
@@ -105,11 +108,11 @@ namespace ZXY_ZXSC
             requestGetJson(sortByProductURL);
 
             #region 按产品分拣单打印
-            tableCPprint.Columns.Add("客户名称");
-            tableCPprint.Columns.Add("产品名称");
-            tableCPprint.Columns.Add("下单数量");
-            tableCPprint.Columns.Add("单位");
-            tableCPprint.Columns.Add("备注");
+            prePrintProductTable.Columns.Add("客户名称");
+            prePrintProductTable.Columns.Add("产品名称");
+            prePrintProductTable.Columns.Add("下单数量");
+            prePrintProductTable.Columns.Add("单位");
+            prePrintProductTable.Columns.Add("备注");
             #endregion
         }
 
@@ -154,11 +157,11 @@ namespace ZXY_ZXSC
                     try { tableCP.Clear(); tableCP.Columns.Clear(); } catch { }
 
                     type = 3;
-                    tableCPprint.Clear();
+                    prePrintProductTable.Clear();
                     prePrintProductURL = baseURL + "sorteOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                     requestGetJson(prePrintProductURL);
                     type = 1;
-                    if (tableCPprint.Rows.Count > 0)
+                    if (prePrintProductTable.Rows.Count > 0)
                     {
 
                         tableCP.Columns.Add("门店");
@@ -190,12 +193,12 @@ namespace ZXY_ZXSC
                         tableCP.Columns.Add("备注");
 
                         //添加行
-                        for (int i = 0; i < tableCPprint.Rows.Count; i++)
+                        for (int i = 0; i < prePrintProductTable.Rows.Count; i++)
                         {
-                            string customerName = tableCPprint.Rows[i]["客户名称"].ToString();
-                            string prodName = tableCPprint.Rows[i]["产品名称"].ToString() + "(" + tableCPprint.Rows[i]["单位"].ToString() + ")";
-                            double sl = double.Parse(tableCPprint.Rows[i]["下单数量"].ToString());
-                            string remark = tableCPprint.Rows[i]["备注"].ToString();
+                            string customerName = prePrintProductTable.Rows[i]["客户名称"].ToString();
+                            string prodName = prePrintProductTable.Rows[i]["产品名称"].ToString() + "(" + prePrintProductTable.Rows[i]["单位"].ToString() + ")";
+                            double sl = double.Parse(prePrintProductTable.Rows[i]["下单数量"].ToString());
+                            string remark = prePrintProductTable.Rows[i]["备注"].ToString();
                             DataRow[] arrChkExist = tableCP.Select("门店='" + customerName + "'");
 
                             if (tableCP.Columns.Contains(prodName))
@@ -306,6 +309,13 @@ namespace ZXY_ZXSC
             public string ProductName { set; get; }//产品名称
             public string QualityTime { set; get; }//保质期
             public int ScProductID { set; get; }//产品ID
+
+            public static string CodeKey = "ProductCode";
+            public static string CountKey = "OrderCount";
+            public static string UnitKey = "Unit";
+            public static string NameKey = "ProductName";
+            public static string QualityTimeKey = "QualityTime";
+            public static string IDKey = "ScProductID";
         }
         public class ProductData
         {
@@ -482,7 +492,7 @@ namespace ZXY_ZXSC
                             break;
                         case 2:
                             #region 按订单接口
-                            tableProduct.Rows.Clear();
+                            orderTable.Rows.Clear();
                             OrdersData ordersData = js.Deserialize<OrdersData>(jsonstr);
 
                             if (ordersData.status.ToString().Equals("200"))
@@ -492,7 +502,7 @@ namespace ZXY_ZXSC
                                 {
                                     for (int i = 0; i < OrderList.Count; i++)
                                     {
-                                        DataRow tableProductRow = tableProduct.NewRow();
+                                        DataRow tableProductRow = orderTable.NewRow();
                                         tableProductRow["客户名称"] = OrderList[i].DepartmentName;
                                         tableProductRow["订单ID"] = OrderList[i].ScOrderID;
                                         //tableProductRow["客户名称"] = OrderList[i].DepartmentName;
@@ -511,11 +521,11 @@ namespace ZXY_ZXSC
                                             tableProductRow["状态"] = "未完成分拣";
                                             tableProductRow["操作"] = "分拣";
                                         }
-                                        tableProduct.Rows.Add(tableProductRow);
+                                        orderTable.Rows.Add(tableProductRow);
                                     }
                                 }
 
-                                yc(dataGridView1, tableProduct);
+                                yc(dataGridView1, orderTable);
                                 dataGridView1.ClearSelection();
                             }
                             #endregion
@@ -530,13 +540,13 @@ namespace ZXY_ZXSC
                                 {
                                     for (int i = 0; i < ProductList.Count; i++)
                                     {
-                                        DataRow cpPrintrow = tableCPprint.NewRow();
+                                        DataRow cpPrintrow = prePrintProductTable.NewRow();
                                         cpPrintrow["产品名称"] = ProductList[i].ProductName;
                                         cpPrintrow["客户名称"] = ProductList[i].DepartmentName;
                                         cpPrintrow["备注"] = ProductList[i].Remark;
                                         cpPrintrow["下单数量"] = ProductList[i].OrderCount;
                                         cpPrintrow["单位"] = ProductList[i].Unit;
-                                        tableCPprint.Rows.Add(cpPrintrow);
+                                        prePrintProductTable.Rows.Add(cpPrintrow);
                                     }
                                 }
                             }
@@ -791,7 +801,7 @@ namespace ZXY_ZXSC
                         type = 4;
                         tableDD.Clear();
                         mytableDD.Clear();
-                        tableCPprint.Clear();
+                        prePrintProductTable.Clear();
                         orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
                         requestGetJson(orderDetailURL);
                         type = 2;
