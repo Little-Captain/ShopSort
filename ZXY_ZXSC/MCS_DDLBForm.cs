@@ -120,6 +120,20 @@ namespace ZXY_ZXSC
             }
             catch { }
         }
+
+        private bool completed()
+        {
+            //dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["分拣确认"].Value.ToString() != "已确认")
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         //打印
         private void btn_print_Click(object sender, EventArgs e)
         {
@@ -129,18 +143,30 @@ namespace ZXY_ZXSC
                 {
                     DataTable cpPrint = mytableDD.Copy();
                     DataRow[] myrows = null;
-                    for (int i = 0; i < cpPrint.Rows.Count; i++)
+                    if (completed())
                     {
-                        if (cpPrint.Rows[i]["分拣确认"].ToString() == "已确认")
+                        for (int i = 0; i < cpPrint.Rows.Count; i++)
                         {
                             myrows = cpPrint.Select("分拣确认='已确认'");
                         }
-                        else
-                        {
-                            MessageBox.Show("该订单还有未确认的产品，不可打印！");
-                            return;
-                        }
                     }
+                    else
+                    {
+                        MessageBox.Show("该订单还有未确认的产品，不可打印！");
+                        return;
+                    }
+                    //for (int i = 0; i < cpPrint.Rows.Count; i++)
+                    //{
+                    //    if (cpPrint.Rows[i]["分拣确认"].ToString() == "已确认")
+                    //    {
+                    //        myrows = cpPrint.Select("分拣确认='已确认'");
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("该订单还有未确认的产品，不可打印！");
+                    //        return;
+                    //    }
+                    //}
                     int num = 0;
                     foreach(DataRow item in cpPrint.Rows)
                     {
@@ -616,18 +642,30 @@ namespace ZXY_ZXSC
                 {
                     DataTable cpPrint = mytableDD.Copy();
                     DataRow[] myrows = null;
-                    for (int i = 0; i < cpPrint.Rows.Count; i++)
+                    if (completed())
                     {
-                        if (cpPrint.Rows[i]["分拣确认"].ToString() == "已确认")
+                        for (int i = 0; i < cpPrint.Rows.Count; i++)
                         {
                             myrows = cpPrint.Select("分拣确认='已确认'");
                         }
-                        else
-                        {
-                            MessageBox.Show("该订单还有未确认的产品，不可打印！");
-                            return;
-                        }
                     }
+                    else
+                    {
+                        MessageBox.Show("该订单还有未确认的产品，不可打印！");
+                        return;
+                    }
+                    //for (int i = 0; i < cpPrint.Rows.Count; i++)
+                    //{
+                    //    if (cpPrint.Rows[i]["分拣确认"].ToString() == "已确认")
+                    //    {
+                    //        myrows = cpPrint.Select("分拣确认='已确认'");
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("该订单还有未确认的产品，不可打印！");
+                    //        return;
+                    //    }
+                    //}
                     int num = 0;
                     foreach (DataRow item in cpPrint.Rows)
                     {
