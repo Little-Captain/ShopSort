@@ -93,6 +93,7 @@ namespace ZXY_ZXSC
             mytableDD.Columns.Add("单位");
             mytableDD.Columns.Add("是否过秤");
             mytableDD.Columns.Add("订单编号");
+            mytableDD.Columns.Add("客户名称");
             mytableDD.Columns.Add("产品编号");
             mytableDD.Columns.Add("实际单位");
             mytableDD.Columns.Add("保质期");
@@ -378,11 +379,11 @@ namespace ZXY_ZXSC
         }
         #endregion
         #region 按订单打印
-        public class Order
+        public class OrderProduct
         {
+            public string QualityTime { get; set; }
             public string ActualCount { get; set; }
             public decimal OrderCount { set; get; }
-            public string QualityTime { get; set; }
             //public int ScOrderID { set; get; }
             //public float SellingPrice { set; get; }
             public string OrderNo { set; get; }
@@ -393,10 +394,27 @@ namespace ZXY_ZXSC
             public string Unit { set; get; } // 下单单位
             public bool IsSorted { set; get; }
         }
+        public class Order
+        {
+            //public string ActualCount { get; set; }
+            //public decimal OrderCount { set; get; }
+            //public string QualityTime { get; set; }
+            ////public int ScOrderID { set; get; }
+            ////public float SellingPrice { set; get; }
+            //public string OrderNo { set; get; }
+            //public int ScProductID { set; get; }
+            //public string ProductName { set; get; }
+            //public string ActualUnit { set; get; } // 分拣单位
+            //public string NeedWeighted { get; set; }
+            //public string Unit { set; get; } // 下单单位
+            //public bool IsSorted { set; get; }
+            public List<OrderProduct> listDetail { set; get; }
+            public string DepartmentName { set; get; }
+        }
         public class OrderData
         {
             public string status { set; get; }
-            public List<Order> data { set; get; }
+            public Order data { set; get; }
             public string msg { set; get; }
         }
         #endregion
@@ -558,13 +576,14 @@ namespace ZXY_ZXSC
 
                             if (orderData.status.ToString().Equals("200"))
                             {
-                                List<Order> productList = orderData.data;
+                                List<OrderProduct> productList = orderData.data.listDetail;
                                 if (productList != null)
                                 {
 
                                     for (int i = 0; i < productList.Count; i++)
                                     {
                                         DataRow dr = mytableDD.NewRow();
+                                        dr["客户名称"] = orderData.data.DepartmentName;
                                         dr["订单编号"] = productList[i].OrderNo;
                                         dr["产品编号"] = productList[i].ScProductID;
                                         dr["产品名称"] = productList[i].ProductName;
@@ -719,14 +738,14 @@ namespace ZXY_ZXSC
         //    {
         //        if (type == 2)
         //        {
-        //            if (dataGridView1.Columns[e.ColumnIndex].HeaderText.ToString() == "操作")
+        //            if (dataGridView1.Columns[e.ColumnIndex].HeaderText.ToString() == "订单编号")
         //            {
         //                type = 4;
         //                tableDD.Clear();
         //                mytableDD.Clear();
-        //                tableCPprint.Clear();
-        //                ddPrintUrl = url + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
-        //                requestGetJson(ddPrintUrl);
+        //                prePrintProductTable.Clear();
+        //                orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
+        //                requestGetJson(orderDetailURL);
         //                type = 2;
         //                DataRow rows = tableDD.NewRow();
         //                rows["订单编号"] = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
@@ -748,8 +767,8 @@ namespace ZXY_ZXSC
         //            {
         //                type = 4;
         //                mytableDD.Clear();
-        //                ddPrintUrl = url + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
-        //                requestGetJson(ddPrintUrl);
+        //                orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
+        //                requestGetJson(orderDetailURL);
         //                MCS_DDLBForm mform = new MCS_DDLBForm();
         //                mform.lx = com_lx.Text.ToString();
         //                mform.type = 2;
@@ -764,7 +783,7 @@ namespace ZXY_ZXSC
         //        else if(type==1)
         //        {
         //            type = 5;
-        //            tableCP = dataCp.Copy();
+        //            tableCP = productTable.Copy();
         //            if (tableCP.Columns.Count ==6)
         //            {
         //                tableCP.Columns.Add("订单id");
@@ -773,8 +792,8 @@ namespace ZXY_ZXSC
         //                tableCP.Columns.Add("分拣确认");
         //            }
         //            tableCP.Clear();
-        //            cpdetailsUrl = url + "sorteByProductCheck.html?isFrom=4&scRouteId=" + com_lx.SelectedValue + "&companyId=" + ConfigurationManager.AppSettings["companyId"] + "&scProductId=" + int.Parse(dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString());
-        //            requestGetJson(cpdetailsUrl);
+        //            sortByProductCheckURL = baseURL + "sorteByProductCheck.html?isFrom=4&scRouteId=" + com_lx.SelectedValue + "&companyId=" + ConfigurationManager.AppSettings["companyId"] + "&scProductId=" + int.Parse(dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString());
+        //            requestGetJson(sortByProductCheckURL);
         //            type = 1;
         //            MCS_DDLBForm mform = new MCS_DDLBForm();
         //            mform.lx = com_lx.Text.ToString();
@@ -796,8 +815,9 @@ namespace ZXY_ZXSC
             {
                 if (type == 2)
                 {
-                    if (dataGridView1.Rows[e.RowIndex].Cells["操作"].Value.ToString() == "打印")
+                    if (dataGridView1.Columns[e.ColumnIndex].HeaderText.ToString() == "客户名称")
                     {
+                        // 打印拣货单
                         type = 4;
                         tableDD.Clear();
                         mytableDD.Clear();
@@ -811,9 +831,8 @@ namespace ZXY_ZXSC
                         tableDD.Rows.Add(rows);
                         if (mytableDD.Rows.Count > 0)
                         {
-
                             DataRow[] cpPrintRow = mytableDD.Select();
-
+                            
                             print(cpPrintRow);
                         }
                         else
@@ -821,8 +840,9 @@ namespace ZXY_ZXSC
                             MessageBox.Show("暂无数据！");
                         }
                     }
-                    else
+                    else if (dataGridView1.Columns[e.ColumnIndex].HeaderText.ToString() == "操作")
                     {
+                        // 进入分拣, 或者打印
                         type = 4;
                         mytableDD.Clear();
                         orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";

@@ -212,7 +212,7 @@
 	End
 	Items Parameter
 		Item
-			Name='门店名称'
+			Name='客户名称'
 		End
 		Item
 			Name='客户电话'
@@ -453,7 +453,7 @@
 						Bold=T
 						Charset=134
 					End
-					Text='门店名称：'
+					Text='客户名称：'
 				End
 				Item
 					Type=MemoBox
@@ -477,7 +477,7 @@
 						Weight=400
 						Charset=134
 					End
-					Text='[#{门店名称}#]'
+					Text='[#{客户名称}#]'
 				End
 			End
 		End
