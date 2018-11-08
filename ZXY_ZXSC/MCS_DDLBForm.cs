@@ -499,7 +499,8 @@ namespace ZXY_ZXSC
                         }
                     }
                     if (dataGridView1.Columns[e.ColumnIndex].HeaderText.Equals("分拣数量") &&
-                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value.ToString().Equals("确认") && dataGridView1.Rows[e.RowIndex].Cells["是否过秤"].Value.ToString().Equals("是"))
+                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value.ToString().Equals("确认") &&
+                        dataGridView1.Rows[e.RowIndex].Cells["是否过秤"].Value.ToString().Equals("是"))
                     {
                         row = e.RowIndex;
                         if (ck_Open == 1)
@@ -530,23 +531,20 @@ namespace ZXY_ZXSC
 
                                 string orderCount = dataGridView1.Rows[e.RowIndex].Cells["下单数量"].Value.ToString();
                                 string actualUnit = dataGridView1.Rows[e.RowIndex].Cells["分拣单位"].Value.ToString();
-                                string isNeedGC = dataGridView1.Rows[e.RowIndex].Cells["是否过秤"].Value.ToString();
+                                //string isNeedGC = dataGridView1.Rows[e.RowIndex].Cells["是否过秤"].Value.ToString();
                                 if (dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString()=="")
                                 {
-                                    if (isNeedGC == "否")
+                                    if (orderCount.Contains(actualUnit))
                                     {
-                                        if (orderCount.Contains(actualUnit))
+                                        try
                                         {
-                                            try
-                                            {
-                                                int orderCharCount = orderCount.Length;
-                                                int unitCharCount = actualUnit.Length;
-                                                string countStr = orderCount.Remove(orderCharCount - unitCharCount, unitCharCount);
-                                                double count = double.Parse(countStr);
-                                                dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value = count.ToString();
-                                            }
-                                            catch { }
+                                            int orderCharCount = orderCount.Length;
+                                            int unitCharCount = actualUnit.Length;
+                                            string countStr = orderCount.Remove(orderCharCount - unitCharCount, unitCharCount);
+                                            double count = double.Parse(countStr);
+                                            dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value = count.ToString();
                                         }
+                                        catch { }
                                     }
                                 }
                                 string actualCount = dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString();

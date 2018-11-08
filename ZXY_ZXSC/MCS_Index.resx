@@ -235,7 +235,7 @@
     <value>17</value>
   </data>
   <data name="rioDD.Text" xml:space="preserve">
-    <value>按订单分拣</value>
+    <value>按产品分拣</value>
   </data>
   <data name="&gt;&gt;rioDD.Name" xml:space="preserve">
     <value>rioDD</value>
@@ -265,7 +265,7 @@
     <value>16</value>
   </data>
   <data name="rioCP.Text" xml:space="preserve">
-    <value>按产品分拣</value>
+    <value>按订单分拣</value>
   </data>
   <data name="&gt;&gt;rioCP.Name" xml:space="preserve">
     <value>rioCP</value>

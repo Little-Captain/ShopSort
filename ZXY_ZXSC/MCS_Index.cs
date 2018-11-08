@@ -105,8 +105,10 @@ namespace ZXY_ZXSC
             routeURL = baseURL + "listRouteDesktop.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4";
             requestGetJson(routeURL);
 
-            sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-            requestGetJson(sortByProductURL);
+            btn_print.Visible = false;
+            type = 2;
+            sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+            requestGetJson(sortByOrderURL);
 
             #region 按产品分拣单打印
             prePrintProductTable.Columns.Add("客户名称");
@@ -188,7 +190,6 @@ namespace ZXY_ZXSC
                         }
                         if (tableCP.Columns.Count == 1)
                         {
-
                             MessageBox.Show("暂未选择产品");
                         }
                         tableCP.Columns.Add("备注");
@@ -235,6 +236,7 @@ namespace ZXY_ZXSC
                                 }
                             }
                         }
+
                         DataRow sumRow = tableCP.NewRow();
                         sumRow["门店"] = "合计";
                         for (int i = 1; i < tableCP.Columns.Count - 1; i++)
@@ -693,17 +695,17 @@ namespace ZXY_ZXSC
         {
             if (rioCP.Checked)
             {
-                btn_print.Visible = true;
-                type = 1;
-                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(sortByProductURL);
-            }
-            else if (rioDD.Checked)
-            {
                 btn_print.Visible = false;
                 type = 2;
                 sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByOrderURL);
+            }
+            else if (rioDD.Checked)
+            {
+                btn_print.Visible = true;
+                type = 1;
+                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByProductURL);
             }
         }
         //选择路线
