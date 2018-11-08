@@ -101,6 +101,7 @@ namespace ZXY_ZXSC
                     lbl_time.Text = xdsj;
                     label1.Text = "产品名称：";
                     lbl_ddh.Text = ddbh;
+                    remarkLabel.Visible = false;
                     label5.Text = "下单合计：";
 
                     yc(dataGridView1, mytableCP);

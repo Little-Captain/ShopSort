@@ -219,7 +219,7 @@ namespace ZXY_ZXSC
                                             remark = remark + "," + currentRemark;
                                     }
 
-                                    arrChkExist[0][prodName] = currentSL = sl;
+                                    arrChkExist[0][prodName] = currentSL + sl;
                                     if (remark.Trim().Length > 0)
                                         arrChkExist[0]["备注"] = remark;
                                 }
@@ -335,6 +335,7 @@ namespace ZXY_ZXSC
             public string Unit { set; get; }//单位
             public string ProductName { set; get; }//产品名称
             public string Remark { set; get; }//备注
+            public int OrderNum { set; get; } // 顺序
         }
         public class ProductPrintData
         {
@@ -525,7 +526,6 @@ namespace ZXY_ZXSC
                                         DataRow tableProductRow = orderTable.NewRow();
                                         tableProductRow["客户名称"] = OrderList[i].DepartmentName;
                                         tableProductRow["订单ID"] = OrderList[i].ScOrderID;
-                                        //tableProductRow["客户名称"] = OrderList[i].DepartmentName;
                                         tableProductRow["客户电话"] = OrderList[i].Mobile;
                                         tableProductRow["地址"] = OrderList[i].Country + OrderList[i].Province + OrderList[i].City + OrderList[i].Address;
                                         tableProductRow["下单时间"] = OrderList[i].OrderTime;
@@ -558,16 +558,28 @@ namespace ZXY_ZXSC
                                 List<ProductPrint> ProductList = pruductPrintData.data;
                                 if (ProductList.Count > 0)
                                 {
+                                    DataTable tmpTable = new DataTable();
+                                    tmpTable.Columns.Add("客户名称");
+                                    tmpTable.Columns.Add("产品名称");
+                                    tmpTable.Columns.Add("下单数量");
+                                    tmpTable.Columns.Add("单位");
+                                    tmpTable.Columns.Add("备注");
+                                    tmpTable.Columns.Add("Sort", System.Type.GetType("System.Int32"));
                                     for (int i = 0; i < ProductList.Count; i++)
                                     {
-                                        DataRow cpPrintrow = prePrintProductTable.NewRow();
-                                        cpPrintrow["产品名称"] = ProductList[i].ProductName;
+                                        DataRow cpPrintrow = tmpTable.NewRow();
                                         cpPrintrow["客户名称"] = ProductList[i].DepartmentName;
-                                        cpPrintrow["备注"] = ProductList[i].Remark;
+                                        cpPrintrow["产品名称"] = ProductList[i].ProductName;
                                         cpPrintrow["下单数量"] = ProductList[i].OrderCount;
                                         cpPrintrow["单位"] = ProductList[i].Unit;
-                                        prePrintProductTable.Rows.Add(cpPrintrow);
+                                        cpPrintrow["备注"] = ProductList[i].Remark;
+                                        cpPrintrow["Sort"] = ProductList[i].OrderNum;
+                                        tmpTable.Rows.Add(cpPrintrow);
                                     }
+                                    tmpTable.DefaultView.Sort = "Sort ASC";
+                                    tmpTable = tmpTable.DefaultView.ToTable();
+                                    tmpTable.Columns.Remove("Sort");
+                                    prePrintProductTable = tmpTable.Copy();
                                 }
                             }
                             #endregion
@@ -884,7 +896,6 @@ namespace ZXY_ZXSC
                     MCS_DDLBForm mform = new MCS_DDLBForm();
                     mform.lx = com_lx.Text.ToString();
                     mform.type = 1;
-                    //mform.orderID =;
                     mform.khmc = dataGridView1.Rows[e.RowIndex].Cells["产品名称"].Value.ToString();
                     mform.xdsj = dataGridView1.Rows[e.RowIndex].Cells["下单数量"].Value.ToString();
                     mform.ddbh = dataGridView1.Rows[e.RowIndex].Cells["产品编号"].Value.ToString();
