@@ -43,6 +43,7 @@ namespace ZXY_ZXSC
         public string khmc="";
         public string ddbh = "";
         public string xdsj = "";
+        public string remark = "";
         public string url="";
         private void MCS_DDLBForm_Load(object sender, EventArgs e)
         {
@@ -88,6 +89,7 @@ namespace ZXY_ZXSC
                     lbl_name.Text = khmc;
                     lbl_time.Text = xdsj;
                     lbl_ddh.Text = ddbh;
+                    lbl_remark.Text = remark;
                     label5.Text = "下单时间：";
                 }
                 else

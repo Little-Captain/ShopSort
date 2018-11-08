@@ -479,7 +479,7 @@ namespace ZXY_ZXSC
                                 com_lx.ValueMember = "ScRouteID";
                                 com_lx.DisplayMember = "Route";
                                 com_lx.SelectedIndex = 0;
-                                type = 1;
+                                type = 2;
                             }
                             break;
                         #endregion
@@ -713,15 +713,15 @@ namespace ZXY_ZXSC
         {
             if (rioCP.Checked)
             {
-                type = 1;
-                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                requestGetJson(sortByProductURL);
-            }
-            else if (rioDD.Checked)
-            {
                 type = 2;
                 sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByOrderURL);
+            }
+            else if (rioDD.Checked)
+            {
+                type = 1;
+                sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+                requestGetJson(sortByProductURL);
             }
 
         }
@@ -857,6 +857,7 @@ namespace ZXY_ZXSC
                         mform.khmc = dataGridView1.Rows[e.RowIndex].Cells["客户名称"].Value.ToString();
                         mform.xdsj = dataGridView1.Rows[e.RowIndex].Cells["下单时间"].Value.ToString();
                         mform.ddbh = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
+                        mform.remark = dataGridView1.Rows[e.RowIndex].Cells["备注"].Value.ToString();
                         mform.url = orderDetailURL;
                         //mform.mytableDD = mytableDD;
                         mform.ShowDialog();

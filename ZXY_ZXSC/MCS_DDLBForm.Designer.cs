@@ -49,6 +49,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.ck_open = new System.Windows.Forms.CheckBox();
             this.btn_history = new System.Windows.Forms.Button();
+            this.remarkLabel = new System.Windows.Forms.Label();
+            this.lbl_remark = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +75,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Menu;
             this.label1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(406, 139);
+            this.label1.Location = new System.Drawing.Point(385, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(114, 20);
             this.label1.TabIndex = 0;
@@ -100,7 +102,7 @@
             this.lbl_time.AutoSize = true;
             this.lbl_time.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_time.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_time.Location = new System.Drawing.Point(136, 170);
+            this.lbl_time.Location = new System.Drawing.Point(505, 138);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(0, 21);
             this.lbl_time.TabIndex = 5;
@@ -111,7 +113,7 @@
             this.label5.BackColor = System.Drawing.SystemColors.Menu;
             this.label5.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(26, 170);
+            this.label5.Location = new System.Drawing.Point(385, 139);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(114, 20);
             this.label5.TabIndex = 4;
@@ -144,7 +146,7 @@
             this.lbl_name.AutoSize = true;
             this.lbl_name.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_name.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_name.Location = new System.Drawing.Point(516, 139);
+            this.lbl_name.Location = new System.Drawing.Point(505, 107);
             this.lbl_name.Name = "lbl_name";
             this.lbl_name.Size = new System.Drawing.Size(0, 21);
             this.lbl_name.TabIndex = 1;
@@ -216,6 +218,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lbl_remark);
+            this.panel1.Controls.Add(this.remarkLabel);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.lbl_lx);
             this.panel1.Controls.Add(this.label6);
@@ -303,6 +307,28 @@
             this.btn_history.UseVisualStyleBackColor = false;
             this.btn_history.Visible = false;
             // 
+            // remarkLabel
+            // 
+            this.remarkLabel.AutoSize = true;
+            this.remarkLabel.BackColor = System.Drawing.SystemColors.Menu;
+            this.remarkLabel.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.remarkLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.remarkLabel.Location = new System.Drawing.Point(68, 170);
+            this.remarkLabel.Name = "remarkLabel";
+            this.remarkLabel.Size = new System.Drawing.Size(72, 20);
+            this.remarkLabel.TabIndex = 15;
+            this.remarkLabel.Text = "备注：";
+            // 
+            // lbl_remark
+            // 
+            this.lbl_remark.AutoSize = true;
+            this.lbl_remark.BackColor = System.Drawing.SystemColors.Menu;
+            this.lbl_remark.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl_remark.Location = new System.Drawing.Point(136, 169);
+            this.lbl_remark.Name = "lbl_remark";
+            this.lbl_remark.Size = new System.Drawing.Size(0, 21);
+            this.lbl_remark.TabIndex = 16;
+            // 
             // MCS_DDLBForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -317,7 +343,6 @@
             this.Name = "MCS_DDLBForm";
             this.Text = "智迅工厂智能分拣系统";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            //this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MCS_DDLBForm_FormClosed);
             this.Load += new System.EventHandler(this.MCS_DDLBForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -344,6 +369,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btn_history;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label remarkLabel;
+        private System.Windows.Forms.Label lbl_remark;
     }
 }
 
