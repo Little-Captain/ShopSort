@@ -208,19 +208,19 @@ namespace ZXY_ZXSC
                                 if (arrChkExist.Length > 0)
                                 {
                                     double currentSL = 0;
-                                    string currentRemark = "";
+                                    //string currentRemark = "";
 
                                     try { currentSL = double.Parse(arrChkExist[0][prodName].ToString()); } catch { }
-                                    try { currentRemark = arrChkExist[0]["备注"].ToString(); } catch { }
+                                    //try { currentRemark = arrChkExist[0]["备注"].ToString(); } catch { }
 
-                                    if (remark.Trim().Length > 0)
-                                    {
-                                        if (currentRemark.Trim().Length > 0)
-                                            remark = remark + "," + currentRemark;
-                                    }
+                                    //if (remark.Trim().Length > 0)
+                                    //{
+                                    //    if (currentRemark.Trim().Length > 0)
+                                    //        remark = remark + "," + currentRemark;
+                                    //}
 
                                     arrChkExist[0][prodName] = currentSL + sl;
-                                    if (remark.Trim().Length > 0)
+                                    //if (remark.Trim().Length > 0)
                                         arrChkExist[0]["备注"] = remark;
                                 }
                                 else
