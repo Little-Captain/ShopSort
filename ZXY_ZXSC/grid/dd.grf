@@ -9,11 +9,11 @@
 	Object Printer
 		Size=256
 		Width=21.6
-		Height=13.9
+		Height=13.95
 		LeftMargin=0.5
 		TopMargin=0.5
-		RightMargin=0.740833
-		BottomMargin=1
+		RightMargin=0.5
+		BottomMargin=0.5
 	End
 	Object DetailGrid
 		Object Recordset
@@ -285,7 +285,7 @@
 		End
 	End
 	Object PageHeader
-		Height=0.211667
+		Height=0
 	End
 	Object PageFooter
 		Height=0
@@ -668,7 +668,7 @@
 						Charset=134
 					End
 					TextAlign=MiddleCenter
-					Text='智迅商城订单'
+					Text='三惠威威订单'
 				End
 				Item
 					Type=Barcode

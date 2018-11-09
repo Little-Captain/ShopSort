@@ -7,11 +7,9 @@
 		Charset=134
 	End
 	Object Printer
-		Size=256
-		Width=24.1
-		Height=13.9
+		Height=29.7
 		LeftMargin=1
-		TopMargin=2.64583
+		TopMargin=1
 		RightMargin=1
 		BottomMargin=1
 	End
@@ -202,7 +200,7 @@
 					Charset=134
 				End
 				GetDisplayTextScript='1'
-				Text='智迅商城拣货单'
+				Text='三惠威威拣货单'
 			End
 		End
 	End
