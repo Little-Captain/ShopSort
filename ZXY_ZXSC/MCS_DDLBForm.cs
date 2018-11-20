@@ -314,8 +314,8 @@ namespace ZXY_ZXSC
                 StreamReader stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
                 jsonstr = stream.ReadLine();
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                OrderData orderData = js.Deserialize<OrderData>(jsonstr);
-                if (orderData.status.ToString().Equals("200"))
+                ResponseResult r = js.Deserialize<ResponseResult>(jsonstr);
+                if (r.status.ToString().Equals("200"))
                 {
                     return true;
                 }
@@ -443,6 +443,12 @@ namespace ZXY_ZXSC
         {
             public string status { set; get; }
             public Order data { set; get; }
+            public string msg { set; get; }
+        }
+
+        public class ResponseResult
+        {
+            public string status { set; get; }
             public string msg { set; get; }
         }
 
@@ -588,20 +594,28 @@ namespace ZXY_ZXSC
                                 if (actualCount == "" || actualCount == "0")
                                 {
                                     actualCount = "0";
-
                                     dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(135, 206, 250);
                                     return;
                                 }
                                 string isFrom = "4";
-                                islist = 0;
                                 string url = "";
                                 if (type == 2)
                                 {
-                                    url = ConfigurationManager.AppSettings["url"] + "orderSorting.html?actualCount=" + actualCount + "&scProductId=" + scProductId + "&scOrderId=" + scOrderId + "&isFrom=" + isFrom + "";
+                                    url = ConfigurationManager.AppSettings["url"] +
+                                        "orderSorting.html?actualCount=" + actualCount +
+                                        "&scProductId=" + scProductId +
+                                        "&scOrderId=" + scOrderId +
+                                        "&isFrom=" + isFrom +
+                                        "";
                                 }
                                 else
                                 {
-                                    url = ConfigurationManager.AppSettings["url"] + "orderSorting.html?actualCount=" + actualCount + "&scProductId=" + dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString() + "&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单id"].Value.ToString() + "&isFrom=" + isFrom + "";
+                                    url = ConfigurationManager.AppSettings["url"] +
+                                        "orderSorting.html?actualCount=" + actualCount +
+                                        "&scProductId=" + dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString() +
+                                        "&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单id"].Value.ToString() +
+                                        "&isFrom=" + isFrom +
+                                        "";
                                 }
                                 foreach (DataRow item in mytableDD.Rows)
                                 {
@@ -620,13 +634,41 @@ namespace ZXY_ZXSC
                                     {
                                         dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value = "已确认";
                                         dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(230, 230, 230);
-                                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].ReadOnly = true;
                                         dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].ReadOnly = true;
                                     }
                                 }
                                 else
                                 {
                                     dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value = "";
+                                }
+                            }
+                            else if (dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value.ToString() == "已确认")
+                            {
+                                if (MessageBox.Show("需要撤销[" + dataGridView1.Rows[e.RowIndex].Cells["产品名称"].Value.ToString() + "]的分拣?", "分拣撤销", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                {
+                                    string scProductId = dataGridView1.Rows[e.RowIndex].Cells["产品编号"].Value.ToString();
+                                    string url = "";
+                                    if (type == 2)
+                                    {
+                                        url = ConfigurationManager.AppSettings["url"] +
+                                            "cancelSorting.html?scOrderId=" + scOrderId +
+                                            "&scProductId=" + scProductId +
+                                            "&isFrom=4";
+                                    }
+                                    else
+                                    {
+                                        url = ConfigurationManager.AppSettings["url"] +
+                                            "cancelSorting.html?scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单id"].Value.ToString() +
+                                            "&scProductId=" + dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString() +
+                                            "&isFrom=4";
+                                    }
+                                    if (requestGetSuccess(url))
+                                    {
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value = "确认";
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(135, 206, 250);
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value = "";
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].ReadOnly = false;
+                                    }
                                 }
                             }
                         }
@@ -762,6 +804,11 @@ namespace ZXY_ZXSC
                 sp1.Close();
             }
             catch { }
+        }
+
+        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
         }
     }
 }
