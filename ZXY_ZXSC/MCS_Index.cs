@@ -11,6 +11,7 @@ using System.Net;
 using System.Text;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace ZXY_ZXSC
 {
@@ -117,6 +118,13 @@ namespace ZXY_ZXSC
             prePrintProductTable.Columns.Add("单位");
             prePrintProductTable.Columns.Add("备注");
             #endregion
+
+            /// 获取串口名，并设置第一个为默认串口
+            string[] ports = System.IO.Ports.SerialPort.GetPortNames();
+            if (ports.Length > 0)
+            {
+                ConfigApp.modifyItem("PortName", ports[0]);
+            }
         }
 
 
@@ -930,6 +938,23 @@ namespace ZXY_ZXSC
                 sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByOrderURL);
             }
+        }
+
+        private void portbtn_click(object o, EventArgs e)
+        {
+            ConfigApp.modifyItem("PortName", o.ToString());
+        }
+
+        private void portMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            portMenuItem.DropDownItems.Clear();
+            string[] ports = System.IO.Ports.SerialPort.GetPortNames();
+            List<ToolStripMenuItem> list = new List<ToolStripMenuItem>();
+            foreach (string portName in ports)
+            {
+                list.Add(new ToolStripMenuItem(portName, null, new EventHandler(portbtn_click)));
+            }
+            portMenuItem.DropDownItems.AddRange(list.ToArray());
         }
     }
 }
