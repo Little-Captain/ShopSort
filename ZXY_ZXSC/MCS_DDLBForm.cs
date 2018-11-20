@@ -805,10 +805,5 @@ namespace ZXY_ZXSC
             }
             catch { }
         }
-
-        private void dataGridView1_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-
-        }
     }
 }
