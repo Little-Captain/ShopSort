@@ -29,7 +29,11 @@ namespace ZXY_ZXSC
 
         public void GridReportForm_Load(object sender, EventArgs e)
         {
-           
+            startPrint();
+        }
+
+        public void startPrint()
+        {
             string path = Application.StartupPath.ToLower();//获取启动了应用程序的可执行文件的路径，不包括可执行文件的名称
             string FileName = path + "\\" + reportname;
             try { Report.LoadFromFile(FileName); }
@@ -102,7 +106,7 @@ namespace ZXY_ZXSC
                                 }
                             }
 
-                        #endregion
+                            #endregion
                             //DataRow da = dt.NewRow();
                             #region 属于副窗的记录填充到下一行
                             DataRow[] dd = dt.Select("1=1");
@@ -116,7 +120,7 @@ namespace ZXY_ZXSC
                             }
                         }
 
-                            #endregion
+                        #endregion
                         #region 移除原本属于副窗的记录
 
 

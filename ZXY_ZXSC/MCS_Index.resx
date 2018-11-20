@@ -453,11 +453,23 @@
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="portMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 21</value>
+  <data name="previewMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="portMenuItem.Text" xml:space="preserve">
-    <value>串口号</value>
+  <data name="previewMenuItem.Text" xml:space="preserve">
+    <value>打印预览</value>
+  </data>
+  <data name="serialMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="serialMenuItem.Text" xml:space="preserve">
+    <value>当前串口</value>
+  </data>
+  <data name="settingMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="settingMenuItem.Text" xml:space="preserve">
+    <value>设置</value>
   </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -782,10 +794,22 @@
   <data name="$this.Text" xml:space="preserve">
     <value>智迅工厂智能分拣系统</value>
   </data>
-  <data name="&gt;&gt;portMenuItem.Name" xml:space="preserve">
-    <value>portMenuItem</value>
+  <data name="&gt;&gt;settingMenuItem.Name" xml:space="preserve">
+    <value>settingMenuItem</value>
   </data>
-  <data name="&gt;&gt;portMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;settingMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;previewMenuItem.Name" xml:space="preserve">
+    <value>previewMenuItem</value>
+  </data>
+  <data name="&gt;&gt;previewMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;serialMenuItem.Name" xml:space="preserve">
+    <value>serialMenuItem</value>
+  </data>
+  <data name="&gt;&gt;serialMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

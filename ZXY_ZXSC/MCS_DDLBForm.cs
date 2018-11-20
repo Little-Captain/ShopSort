@@ -229,9 +229,22 @@ namespace ZXY_ZXSC
                     BForm.myprinttable = tableProduct;
                     BForm.printtable = myprinttable;
                     BForm.reportname = "dd.grf";
-                    BForm.ptintview = true;//false无预览，直接打印
-                    BForm.ShowDialog();
 
+                    bool isPreview = true;
+                    try
+                    {
+                        isPreview = Convert.ToBoolean(ConfigApp.valueItem("PrintPreview"));
+                    }
+                    catch { }
+                    BForm.ptintview = isPreview;
+                    if (isPreview)
+                    {
+                        BForm.ShowDialog();
+                    }
+                    else
+                    {
+                        BForm.startPrint();
+                    }
                 }
                 catch { }
             }

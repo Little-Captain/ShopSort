@@ -229,7 +229,7 @@ namespace ZXY_ZXSC
 
                                     arrChkExist[0][prodName] = currentSL + sl;
                                     //if (remark.Trim().Length > 0)
-                                        arrChkExist[0]["备注"] = remark;
+                                    arrChkExist[0]["备注"] = remark;
                                 }
                                 else
                                 {
@@ -303,8 +303,21 @@ namespace ZXY_ZXSC
                         BForm.reportname = "dd_jhd.grf";
                         type = 2;
                     }
-                    BForm.ptintview = true;//false无预览，直接打印
-                    BForm.ShowDialog();
+                    bool isPreview = true;
+                    try
+                    {
+                        isPreview = Convert.ToBoolean(ConfigApp.valueItem("PrintPreview"));
+                    }
+                    catch { }
+                    BForm.ptintview = isPreview;
+                    if (isPreview)
+                    {
+                        BForm.ShowDialog();
+                    }
+                    else
+                    {
+                        BForm.startPrint();
+                    }
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); dataGridView1.DataSource = null; }
             }
@@ -753,84 +766,6 @@ namespace ZXY_ZXSC
             mlForm.ShowDialog();
         }
 
-
-        //private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (type == 2)
-        //        {
-        //            if (dataGridView1.Columns[e.ColumnIndex].HeaderText.ToString() == "订单编号")
-        //            {
-        //                type = 4;
-        //                tableDD.Clear();
-        //                mytableDD.Clear();
-        //                prePrintProductTable.Clear();
-        //                orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
-        //                requestGetJson(orderDetailURL);
-        //                type = 2;
-        //                DataRow rows = tableDD.NewRow();
-        //                rows["订单编号"] = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
-        //                rows["客户名称"] = dataGridView1.Rows[e.RowIndex].Cells["客户名称"].Value.ToString();
-        //                tableDD.Rows.Add(rows);
-        //                if (mytableDD.Rows.Count > 0)
-        //                {
-
-        //                    DataRow[] cpPrintRow = mytableDD.Select();
-
-        //                    print(cpPrintRow);
-        //                }
-        //                else
-        //                {
-        //                    MessageBox.Show("暂无数据！");
-        //                }
-        //            }
-        //            else
-        //            {
-        //                type = 4;
-        //                mytableDD.Clear();
-        //                orderDetailURL = baseURL + "orderDetail.html?isFrom=4&scOrderId=" + dataGridView1.Rows[e.RowIndex].Cells["订单ID"].Value.ToString() + "";
-        //                requestGetJson(orderDetailURL);
-        //                MCS_DDLBForm mform = new MCS_DDLBForm();
-        //                mform.lx = com_lx.Text.ToString();
-        //                mform.type = 2;
-        //                mform.khmc = dataGridView1.Rows[e.RowIndex].Cells["客户名称"].Value.ToString();
-        //                mform.xdsj = dataGridView1.Rows[e.RowIndex].Cells["下单时间"].Value.ToString();
-        //                mform.ddbh = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
-        //                mform.mytableDD = mytableDD;
-        //                mform.ShowDialog();
-        //                type = 2;
-        //            }
-        //        }
-        //        else if(type==1)
-        //        {
-        //            type = 5;
-        //            tableCP = productTable.Copy();
-        //            if (tableCP.Columns.Count ==6)
-        //            {
-        //                tableCP.Columns.Add("订单id");
-        //                tableCP.Columns.Add("是否过秤");
-        //                tableCP.Columns.Add("分拣数量");
-        //                tableCP.Columns.Add("分拣确认");
-        //            }
-        //            tableCP.Clear();
-        //            sortByProductCheckURL = baseURL + "sorteByProductCheck.html?isFrom=4&scRouteId=" + com_lx.SelectedValue + "&companyId=" + ConfigurationManager.AppSettings["companyId"] + "&scProductId=" + int.Parse(dataGridView1.Rows[e.RowIndex].Cells["产品id"].Value.ToString());
-        //            requestGetJson(sortByProductCheckURL);
-        //            type = 1;
-        //            MCS_DDLBForm mform = new MCS_DDLBForm();
-        //            mform.lx = com_lx.Text.ToString();
-        //            mform.type = 1;
-
-        //            mform.khmc = dataGridView1.Rows[e.RowIndex].Cells["产品名称"].Value.ToString();
-        //            mform.xdsj = dataGridView1.Rows[e.RowIndex].Cells["下单数量"].Value.ToString();
-        //            mform.ddbh = dataGridView1.Rows[e.RowIndex].Cells["产品编号"].Value.ToString();
-        //            mform.mytableDD = tableCP;
-        //            mform.ShowDialog();
-        //        }
-        //    }
-        //    catch(Exception ex) { }
-        //}
-
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -854,7 +789,7 @@ namespace ZXY_ZXSC
                         if (mytableDD.Rows.Count > 0)
                         {
                             DataRow[] cpPrintRow = mytableDD.Select();
-                            
+
                             print(cpPrintRow);
                         }
                         else
@@ -942,19 +877,56 @@ namespace ZXY_ZXSC
 
         private void portbtn_click(object o, EventArgs e)
         {
+            string name = o.ToString();
+            if (name.Contains("(当前)"))
+            {
+                return;
+            }
             ConfigApp.modifyItem("PortName", o.ToString());
         }
 
-        private void portMenuItem_DropDownOpening(object sender, EventArgs e)
+        private void preBtn_click(object o, EventArgs e)
         {
-            portMenuItem.DropDownItems.Clear();
+            string preString = o.ToString();
+            if (preString.Contains("是"))
+            {
+                ConfigApp.modifyItem("PrintPreview", "false");
+            }
+            else if (preString.Contains("否"))
+            {
+                ConfigApp.modifyItem("PrintPreview", "true");
+            }
+            else { }
+        }
+
+        private void settingMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            settingMenuItem.DropDownItems.RemoveAt(0);
+            bool isPreview = false;
+            try
+            {
+                isPreview = Convert.ToBoolean(ConfigApp.valueItem("PrintPreview"));
+            }
+            catch
+            {
+                settingMenuItem.DropDownItems.Insert(0, new ToolStripMenuItem("打印预览", null, new EventHandler(preBtn_click)));
+            }
+
+            settingMenuItem.DropDownItems.Insert(0, new ToolStripMenuItem("打印预览:" + (isPreview ? "是" : "否"), null, new EventHandler(preBtn_click)));
+
+            serialMenuItem.DropDownItems.Clear();
             string[] ports = System.IO.Ports.SerialPort.GetPortNames();
             List<ToolStripMenuItem> list = new List<ToolStripMenuItem>();
             foreach (string portName in ports)
             {
-                list.Add(new ToolStripMenuItem(portName, null, new EventHandler(portbtn_click)));
+                string name = portName;
+                if (ConfigApp.valueItem("PortName").ToString() == portName)
+                {
+                    name = portName + "(当前)";
+                }
+                list.Add(new ToolStripMenuItem(name, null, new EventHandler(portbtn_click)));
             }
-            portMenuItem.DropDownItems.AddRange(list.ToArray());
+            serialMenuItem.DropDownItems.AddRange(list.ToArray());
         }
     }
 }
