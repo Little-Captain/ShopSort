@@ -38,19 +38,20 @@ namespace ZXY_ZXSC
         public DataTable mytableDD = new DataTable();//打印表的产品
         DataTable tableProduct = new DataTable();//打印表的表头
         public string NeedWeighted = "";
-        public int ck_Open= 0;
+        public int ck_Open = 0;
         public string lx = "";
-        public string khmc="";
+        public string khmc = "";
         public string ddbh = "";
         public string xdsj = "";
         public string remark = "";
-        public string url="";
+        public string url = "";
         private void MCS_DDLBForm_Load(object sender, EventArgs e)
         {
             try
             {
                 ck_open.Checked = true;
-                if (ck_open.Checked == true) {
+                if (ck_open.Checked == true)
+                {
                     ck_Open = 0;
                 }
                 int types = type; lbl_lx.Text = lx;
@@ -109,7 +110,7 @@ namespace ZXY_ZXSC
                 dataGridView1.RowsDefaultCellStyle.WrapMode = DataGridViewTriState.True;
                 dataGridView1.EnableHeadersVisualStyles = false;
 
-              
+
 
                 //requestGetJson(ddurl);
                 sp1.DataReceived += Sp1_DataRevice;
@@ -171,7 +172,7 @@ namespace ZXY_ZXSC
                     //    }
                     //}
                     int num = 0;
-                    foreach(DataRow item in cpPrint.Rows)
+                    foreach (DataRow item in cpPrint.Rows)
                     {
                         num++;
 
@@ -253,7 +254,7 @@ namespace ZXY_ZXSC
         //启动称
         private void Sp1_DataRevice(object sender, SerialDataReceivedEventArgs e)
         {
-            if (sp1.IsOpen==true)
+            if (sp1.IsOpen == true)
             {
                 Byte[] receivedData = new Byte[sp1.BytesToRead];
                 sp1.Read(receivedData, 0, receivedData.Length);
@@ -283,11 +284,11 @@ namespace ZXY_ZXSC
                             double actualWeight = double.Parse(reverse);
                             actualWeight *= 2;
                             //2、将实际重量赋给Cell
-                            if (dataGridView1.Rows[row].Cells["是否过秤"].Value.ToString().Equals("是")&&dataGridView1.Rows[row].Cells["分拣确认"].Value.ToString().Equals("确认")&&ck_Open==0)
+                            if (dataGridView1.Rows[row].Cells["是否过秤"].Value.ToString().Equals("是") && dataGridView1.Rows[row].Cells["分拣确认"].Value.ToString().Equals("确认") && ck_Open == 0)
                             {
-                                    dataGridView1.Rows[row].Cells["分拣数量"].Value = Math.Round(actualWeight, 2);
+                                dataGridView1.Rows[row].Cells["分拣数量"].Value = Math.Round(actualWeight, 2);
                             }
-                          
+
                         }
                         catch { }
                     }
@@ -303,13 +304,32 @@ namespace ZXY_ZXSC
             }));
         }
 
-        //历史订单
-        //private void btn_history_Click(object sender, EventArgs e)
-        //{
-        //    MCS_DDLBListForm mlForm = new MCS_DDLBListForm();
+        private bool requestGetSuccess(string url)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                StreamReader stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                jsonstr = stream.ReadLine();
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                OrderData orderData = js.Deserialize<OrderData>(jsonstr);
+                if (orderData.status.ToString().Equals("200"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
-        //    mlForm.ShowDialog();
-        //}
         private void requestGetJson(string url)
         {
             try
@@ -353,7 +373,7 @@ namespace ZXY_ZXSC
                                 DataRow dr = mytableDD.NewRow();
                                 dr["产品编号"] = prod.ScProductID;
                                 dr["产品名称"] = prod.ProductName;
-                                dr["下单数量"] = prod.OrderCount+prod.Unit;
+                                dr["下单数量"] = prod.OrderCount + prod.Unit;
                                 dr["单价"] = prod.SellingPrice;
                                 dr["分拣单位"] = prod.ActualUnit;
                                 dr["保质期"] = prod.QualityTime + "天";
@@ -394,7 +414,7 @@ namespace ZXY_ZXSC
 
                 }
             }
-            catch (Exception ex) {  }
+            catch (Exception ex) { }
         }
         #region 接收参数 实体
         public class Order
@@ -428,7 +448,7 @@ namespace ZXY_ZXSC
 
         public class Product
         {
-            public string  ActualCount { get; set; }
+            public string ActualCount { get; set; }
             public string ProductCode { get; set; }
             public decimal OrderCount { set; get; }
             public string QualityTime { get; set; }
@@ -450,7 +470,7 @@ namespace ZXY_ZXSC
             {
                 dgv.DataSource = mydt.DefaultView;
                 string strc1 = "";
-               
+
                 for (int j = 0; j < mydt.Columns.Count; j++) //写列标题 
                 {
                     strc1 = mydt.Columns[j].ColumnName.ToUpper();
@@ -460,14 +480,14 @@ namespace ZXY_ZXSC
                         dgv.Columns[strc1].Visible = false;
                     }
                     dgv.Columns[strc1].DefaultCellStyle.BackColor = Color.FromArgb(230, 230, 230);
-                    if (type ==1)
+                    if (type == 1)
                     {
-                        if(strc1.Trim() == "产品编号" || strc1.Trim() == "产品名称" ||strc1.Trim()=="单位")
+                        if (strc1.Trim() == "产品编号" || strc1.Trim() == "产品名称" || strc1.Trim() == "单位")
                         {
                             dgv.Columns[strc1].Visible = false;
                         }
                     }
-                    if (strc1.Trim() == "订单号"||strc1.Trim()=="生产日期" || strc1.Trim() == "产品编号" || strc1.Trim() == "序号" || strc1.Trim() == "生产批号" || strc1.Trim()=="保质期"||strc1.Trim() == "订单编号"|| strc1.Trim() == "实际单位"||strc1.Trim()=="单价"||strc1.Trim()=="总价")
+                    if (strc1.Trim() == "订单号" || strc1.Trim() == "生产日期" || strc1.Trim() == "产品编号" || strc1.Trim() == "序号" || strc1.Trim() == "生产批号" || strc1.Trim() == "保质期" || strc1.Trim() == "订单编号" || strc1.Trim() == "实际单位" || strc1.Trim() == "单价" || strc1.Trim() == "总价")
                     {
                         dgv.Columns[strc1].Visible = false;
                     }
@@ -476,7 +496,7 @@ namespace ZXY_ZXSC
                         dgv.Columns[strc1].ReadOnly = true;
                     }
                 }
-                
+
                 for (int i = 0; i < dgv.Rows.Count; i++)
                 {
                     if (dgv.Rows[i].Cells["分拣确认"].Value.ToString() == "确认")
@@ -548,7 +568,7 @@ namespace ZXY_ZXSC
                                 string orderCount = dataGridView1.Rows[e.RowIndex].Cells["下单数量"].Value.ToString();
                                 string actualUnit = dataGridView1.Rows[e.RowIndex].Cells["分拣单位"].Value.ToString();
                                 //string isNeedGC = dataGridView1.Rows[e.RowIndex].Cells["是否过秤"].Value.ToString();
-                                if (dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString()=="")
+                                if (dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString() == "")
                                 {
                                     if (orderCount.Contains(actualUnit))
                                     {
@@ -568,13 +588,13 @@ namespace ZXY_ZXSC
                                 if (actualCount == "" || actualCount == "0")
                                 {
                                     actualCount = "0";
-                                    
+
                                     dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(135, 206, 250);
                                     return;
                                 }
                                 string isFrom = "4";
-                                string dw = "";
-                                islist = 0; string url = "";
+                                islist = 0;
+                                string url = "";
                                 if (type == 2)
                                 {
                                     url = ConfigurationManager.AppSettings["url"] + "orderSorting.html?actualCount=" + actualCount + "&scProductId=" + scProductId + "&scOrderId=" + scOrderId + "&isFrom=" + isFrom + "";
@@ -594,13 +614,15 @@ namespace ZXY_ZXSC
                                         item["生产日期"] = DateTime.Now.ToString("yyyy-MM-dd");
                                     }
                                 }
-                                if (MessageBox.Show("是否确认分拣数量为："+ dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString()+"?", "分拣确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                if (MessageBox.Show("是否确认分拣数量为：" + dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString() + "?", "分拣确认", MessageBoxButtons.YesNo) == DialogResult.Yes)
                                 {
-                                    requestGetJson(url);
-                                    dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value = "已确认";
-                                    dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(230, 230, 230);
-                                    dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].ReadOnly = true;
-                                    dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].ReadOnly = true;
+                                    if (requestGetSuccess(url))
+                                    {
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Value = "已确认";
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(230, 230, 230);
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].ReadOnly = true;
+                                        dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].ReadOnly = true;
+                                    }
                                 }
                                 else
                                 {
@@ -634,13 +656,14 @@ namespace ZXY_ZXSC
                     }
                 }
             }
-            catch { }    }
+            catch { }
+        }
 
         private void ck_open_CheckedChanged(object sender, EventArgs e)
         {
             if (ck_open.Checked == true)
             {
-                ck_Open =0;
+                ck_Open = 0;
             }
             else
             {
@@ -692,7 +715,7 @@ namespace ZXY_ZXSC
                             if (int.Parse(DateTime.Now.Hour.ToString()) > 12)
                             {
                                 item["生产批号"] = item["产品编号"].ToString() + DateTime.Now.AddDays(1).ToString("yyyyMMdd");
-                                
+
                             }
                             else
                             {
@@ -704,7 +727,7 @@ namespace ZXY_ZXSC
                             if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) > 12)
                             {
                                 item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
-                                item["生产日期"]= DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
+                                item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
                             }
                             else
                             {
@@ -726,7 +749,7 @@ namespace ZXY_ZXSC
                 }
 
             }
-            catch (Exception ex){ }
+            catch (Exception ex) { }
         }
 
         private void MCS_DDLBForm_FormClosed(object sender, FormClosedEventArgs e)
