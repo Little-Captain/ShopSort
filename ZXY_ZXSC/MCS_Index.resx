@@ -463,7 +463,7 @@
     <value>180, 22</value>
   </data>
   <data name="serialMenuItem.Text" xml:space="preserve">
-    <value>当前串口</value>
+    <value>串口</value>
   </data>
   <data name="settingMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
