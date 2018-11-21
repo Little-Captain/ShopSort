@@ -60,7 +60,7 @@ namespace ZXY_ZXSC
             lbl_phone.Text = myrows[0]["客户电话"].ToString();
             lbl_time.Text = myrows[0]["下单时间"].ToString();
 
-            url = ConfigurationManager.AppSettings["url"]+"orderDetail.html?isFrom=4&scOrderId=" + ddh+ "&scSortingPositionId=" + ConfigurationManager.AppSettings["scSortingPositionId"]; ;
+            url = ConfigurationManager.AppSettings["url"] + "orderDetail.html?isFrom=4&scOrderId=" + ddh + "&scSortingPositionId=" + ConfigurationManager.AppSettings["scSortingPositionId"]; ;
             requestGetJson(url);
         }
 
@@ -128,7 +128,7 @@ namespace ZXY_ZXSC
                 }
             }
             catch { }
-           
+
         }
         #region 接收参数 实体
         public class OrderData
@@ -189,18 +189,18 @@ namespace ZXY_ZXSC
 
                         item["序号"] = num;
                         item["单价"] = "";
-                      
-                            if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) > 12)
-                            {
-                                item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
-                                item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
-                            }
-                            else
-                            {
-                                item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).ToString("yyyyMMdd");
-                                item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
-                            }
-                        
+
+                        if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) >= 12)
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
+                        }
+
                         string dw = item["分拣单位"].ToString();
                         string fjsl = item["分拣数量"].ToString();
                         item["分拣数量"] = fjsl + dw;
@@ -267,7 +267,7 @@ namespace ZXY_ZXSC
                         dgv.Columns[strc1].Visible = false;
                     }
                     dgv.Columns[strc1].DefaultCellStyle.BackColor = Color.FromArgb(230, 230, 230);
-                    
+
                     if (strc1.Trim() == "订单号" || strc1.Trim() == "生产日期" || strc1.Trim() == "是否过秤" || strc1.Trim() == "产品编号" || strc1.Trim() == "序号" || strc1.Trim() == "生产批号" || strc1.Trim() == "实际单位" || strc1.Trim() == "订单编号" || strc1.Trim() == "分拣确认" || strc1.Trim() == "单价" || strc1.Trim() == "总价")
                     {
                         dgv.Columns[strc1].Visible = false;
@@ -295,18 +295,18 @@ namespace ZXY_ZXSC
                         num++;
                         item["序号"] = num;
 
-                        
-                            if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) > 12)
-                            {
-                                item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
-                                item["生产日期"]= DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
-                            }
-                            else
-                            {
-                                item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).ToString("yyyyMMdd");
-                                item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
-                            }
-                        
+
+                        if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) >= 12)
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
+                        }
+
                         item["总价"] = decimal.Parse(item["单价"].ToString()) * decimal.Parse(item["分拣数量"].ToString());
 
                         string dw = item["分拣单位"].ToString();
@@ -321,7 +321,7 @@ namespace ZXY_ZXSC
                 }
 
             }
-            catch (Exception ex){ }
+            catch (Exception ex) { }
         }
 
 

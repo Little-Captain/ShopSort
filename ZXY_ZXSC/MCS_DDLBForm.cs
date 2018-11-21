@@ -180,7 +180,7 @@ namespace ZXY_ZXSC
                         item["单价"] = "";
                         if (item["生产日期"].ToString().Trim() == "")
                         {
-                            if (int.Parse(DateTime.Now.Hour.ToString()) > 12)
+                            if (int.Parse(DateTime.Now.Hour.ToString()) >= 12)
                             {
                                 item["生产批号"] = item["产品编号"].ToString() + DateTime.Now.AddDays(1).ToString("yyyyMMdd");
                             }
@@ -191,7 +191,7 @@ namespace ZXY_ZXSC
                         }
                         else
                         {
-                            if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) > 12)
+                            if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) >= 12)
                             {
                                 item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
                                 item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
@@ -619,7 +619,7 @@ namespace ZXY_ZXSC
                                 }
                                 foreach (DataRow item in mytableDD.Rows)
                                 {
-                                    if (int.Parse(DateTime.Now.Hour.ToString()) > 12)
+                                    if (int.Parse(DateTime.Now.Hour.ToString()) >= 12)
                                     {
                                         item["生产日期"] = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
                                     }
@@ -754,7 +754,7 @@ namespace ZXY_ZXSC
                         //item["单价"] = "";
                         if (item["生产日期"].ToString().Trim() == "")
                         {
-                            if (int.Parse(DateTime.Now.Hour.ToString()) > 12)
+                            if (int.Parse(DateTime.Now.Hour.ToString()) >= 12)
                             {
                                 item["生产批号"] = item["产品编号"].ToString() + DateTime.Now.AddDays(1).ToString("yyyyMMdd");
 
@@ -766,7 +766,7 @@ namespace ZXY_ZXSC
                         }
                         else
                         {
-                            if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) > 12)
+                            if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) >= 12)
                             {
                                 item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
                                 item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
