@@ -95,11 +95,11 @@
 			End
 			Item
 				Name='Column10'
-				Width=1.9
+				Width=2.19604
 			End
 			Item
 				Name='Column11'
-				Width=1.9
+				Width=1.5875
 			End
 			Item
 				Name='Column12'
@@ -256,7 +256,7 @@
 						Charset=134
 					End
 					TextAlign=MiddleCenter
-					Text='实际数量'
+					Text='[#{C8}#]'
 				End
 				Item
 					GroupTitle=F
