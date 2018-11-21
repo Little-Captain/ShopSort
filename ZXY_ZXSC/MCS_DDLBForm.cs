@@ -591,9 +591,9 @@ namespace ZXY_ZXSC
                                 }
                                 string actualCount = dataGridView1.Rows[e.RowIndex].Cells["分拣数量"].Value.ToString();
                                 string scProductId = dataGridView1.Rows[e.RowIndex].Cells["产品编号"].Value.ToString();
-                                if (actualCount == "" || actualCount == "0")
+                                if (actualCount == "")
                                 {
-                                    actualCount = "0";
+                                    actualCount = "";
                                     dataGridView1.Rows[e.RowIndex].Cells["分拣确认"].Style.BackColor = Color.FromArgb(135, 206, 250);
                                     return;
                                 }

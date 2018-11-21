@@ -76,34 +76,40 @@
 			End
 			Item
 				Name='Column4'
-				Width=3.20146
+				Width=2.4
 			End
 			Item
 				Name='Column5'
-				Width=2.98979
+				Width=2.4
 			End
 			Item
 				Name='Column6'
-				Width=3.01625
+				Width=2.4
 			End
 			Item
 				Name='Column7'
-				Width=2.77813
+				Width=2.4
 			End
 			Item
 				Name='Column8'
-				Width=2.80458
+				Width=2.4
 			End
 			Item
 				Name='Column9'
-				Width=3.59833
+				Width=6
 			End
 		End
 		Object ColumnContent
-			Height=1.19063
+			Height=1
 			Items ColumnContentCell
 				Item
 					Column='Column2'
+					Object Font
+						Name='宋体'
+						Size=120000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					CanGrow=T
@@ -112,36 +118,72 @@
 				End
 				Item
 					Column='Column4'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C2'
 				End
 				Item
 					Column='Column5'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C3'
 				End
 				Item
 					Column='Column6'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C4'
 				End
 				Item
 					Column='Column7'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C5'
 				End
 				Item
 					Column='Column8'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C6'
 				End
 				Item
 					Column='Column9'
+					Object Font
+						Name='宋体'
+						Size=120000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C7'

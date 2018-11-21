@@ -121,7 +121,13 @@ namespace ZXY_ZXSC
 
             /// 获取串口名，并设置第一个为默认串口
             string[] ports = System.IO.Ports.SerialPort.GetPortNames();
-            if (ports.Length > 0)
+            string currentPort = "";
+            try
+            {
+                currentPort = ConfigApp.valueItem("PortName").ToString();
+            }
+            catch { }
+            if (!ports.Contains(currentPort) && ports.Length > 0)
             {
                 ConfigApp.modifyItem("PortName", ports[0]);
             }
