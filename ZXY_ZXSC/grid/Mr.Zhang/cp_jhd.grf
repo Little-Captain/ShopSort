@@ -504,6 +504,9 @@
 		Item
 			Name='CV9'
 		End
+		Item
+			Name='打印标题'
+		End
 	End
 	Items ReportHeader
 		Item
@@ -512,11 +515,11 @@
 			Height=1.32292
 			Items Control
 				Item
-					Type=StaticBox
-					Name='StaticBox1'
-					Left=7.40833
+					Type=MemoBox
+					Name='MemoBox3'
+					Left=0.211667
 					Top=0.211667
-					Width=7.59354
+					Width=21.1931
 					Height=0.978958
 					Object Font
 						Name='宋体'
@@ -524,8 +527,8 @@
 						Bold=T
 						Charset=134
 					End
-					GetDisplayTextScript='1'
-					Text='三惠威威拣货单'
+					TextAlign=MiddleCenter
+					Text='[#{打印标题}#]'
 				End
 			End
 		End

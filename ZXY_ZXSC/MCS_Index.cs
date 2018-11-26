@@ -87,6 +87,7 @@ namespace ZXY_ZXSC
 
             tableDD.Columns.Add("订单编号");
             tableDD.Columns.Add("客户名称");
+            tableDD.Columns.Add("打印标题");
 
             #region 订单详情
             mytableDD.Columns.Add("产品名称");
@@ -268,6 +269,17 @@ namespace ZXY_ZXSC
                         }
                         tableCP.Rows.Add(sumRow);
                         DataRow[] tableCPRow = tableCP.Select("1=1");
+                        tableDD.Clear();
+                        DataRow rows = tableDD.NewRow();
+                        if (DateTime.Now.Hour >= 12)
+                        {
+                            rows["打印标题"] = "订货计划" + DateTime.Now.AddDays(1).ToString("(yyyy年MM月dd)");
+                        }
+                        else
+                        {
+                            rows["打印标题"] = "订货计划" + DateTime.Now.ToString("(yyyy年MM月dd)");
+                        }
+                        tableDD.Rows.Add(rows);
                         print(tableCPRow);
                     }
                     else
@@ -301,6 +313,7 @@ namespace ZXY_ZXSC
                     if (type == 1)
                     {
                         BForm.reportname = "cp_jhd.grf";
+                        BForm.myprinttable = tableDD;
                         type = 1;
                     }
                     else
@@ -791,11 +804,18 @@ namespace ZXY_ZXSC
                         DataRow rows = tableDD.NewRow();
                         rows["订单编号"] = dataGridView1.Rows[e.RowIndex].Cells["订单编号"].Value.ToString();
                         rows["客户名称"] = dataGridView1.Rows[e.RowIndex].Cells["客户名称"].Value.ToString();
+                        if (DateTime.Now.Hour >= 12)
+                        {
+                            rows["打印标题"] = "拣货单" + DateTime.Now.AddDays(1).ToString("(yyyy年MM月dd)");
+                        }
+                        else
+                        {
+                            rows["打印标题"] = "拣货单" + DateTime.Now.ToString("(yyyy年MM月dd)");
+                        }
                         tableDD.Rows.Add(rows);
                         if (mytableDD.Rows.Count > 0)
                         {
                             DataRow[] cpPrintRow = mytableDD.Select();
-
                             print(cpPrintRow);
                         }
                         else

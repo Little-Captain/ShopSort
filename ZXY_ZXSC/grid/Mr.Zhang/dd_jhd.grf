@@ -184,26 +184,8 @@
 	End
 	Object PageHeader
 		KeepTogether=F
-		Height=1.32
+		Height=0
 		FormatScript='1'
-		Items Control
-			Item
-				Type=StaticBox
-				Name='StaticBox1'
-				Left=7.19667
-				Top=0.3
-				Width=7.80521
-				Height=0.79375
-				Object Font
-					Name='宋体'
-					Size=217500,0
-					Bold=T
-					Charset=134
-				End
-				GetDisplayTextScript='1'
-				Text='三惠威威拣货单'
-			End
-		End
 	End
 	Object PageFooter
 		Tag='1'
@@ -417,18 +399,21 @@
 		Item
 			Name='订单编号'
 		End
+		Item
+			Name='打印标题'
+		End
 	End
 	Items ReportHeader
 		Item
 			Name='ReportHeader1'
 			KeepTogether=F
-			Height=1.00542
+			Height=2.40771
 			Items Control
 				Item
 					Type=StaticBox
 					Name='订单编号'
 					Left=0.211667
-					Top=0.291042
+					Top=1.5875
 					Width=2.59292
 					Height=0.608542
 					Object Font
@@ -443,7 +428,7 @@
 					Type=StaticBox
 					Name='StaticBox2'
 					Left=10.0013
-					Top=0.291042
+					Top=1.5875
 					Width=2.59292
 					Height=0.608542
 					Object Font
@@ -458,7 +443,7 @@
 					Type=MemoBox
 					Name='MemoBox1'
 					Left=2.40771
-					Top=0.291042
+					Top=1.5875
 					Width=7.19667
 					Height=0.608542
 					Text='[#{订单编号}#]'
@@ -467,7 +452,7 @@
 					Type=MemoBox
 					Name='MemoBox2'
 					Left=12.409
-					Top=0.291042
+					Top=1.5875
 					Width=8.59896
 					Height=0.608542
 					Object Font
@@ -477,6 +462,22 @@
 						Charset=134
 					End
 					Text='[#{客户名称}#]'
+				End
+				Item
+					Type=MemoBox
+					Name='MemoBox3'
+					Left=0.211667
+					Top=0.211667
+					Width=18.6002
+					Height=1.19063
+					Object Font
+						Name='宋体'
+						Size=217500,0
+						Bold=T
+						Charset=134
+					End
+					TextAlign=MiddleCenter
+					Text='[#{打印标题}#]'
 				End
 			End
 		End

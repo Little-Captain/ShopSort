@@ -72,23 +72,23 @@
 		Items Column
 			Item
 				Name='Column2'
-				Width=5.76792
+				Width=4.18042
 			End
 			Item
 				Name='Column4'
-				Width=6.21771
+				Width=4.18042
 			End
 			Item
 				Name='Column5'
-				Width=5.60917
+				Width=4.81542
 			End
 			Item
 				Name='Column6'
-				Width=4.36563
+				Width=4.39208
 			End
 		End
 		Object ColumnContent
-			Height=1.19063
+			Height=0.608542
 			Items ColumnContentCell
 				Item
 					Column='Column2'
@@ -120,7 +120,7 @@
 		End
 		Object ColumnTitle
 			KeepTogether=F
-			Height=1.19063
+			Height=0.79375
 			RepeatStyle=OnPage
 			Items ColumnTitleCell
 				Item
@@ -184,13 +184,14 @@
 	End
 	Object PageHeader
 		KeepTogether=F
-		Height=1
+		Height=1.32
 		FormatScript='1'
 		Items Control
 			Item
 				Type=StaticBox
 				Name='StaticBox1'
 				Left=7.19667
+				Top=0.3
 				Width=7.80521
 				Height=0.79375
 				Object Font
