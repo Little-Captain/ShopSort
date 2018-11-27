@@ -123,12 +123,10 @@ namespace ZXY_ZXSC
                             catch { }
                         }
                         yc(dataGridView1, mytableDD);
-
                     }
                 }
             }
             catch { }
-
         }
         #region 接收参数 实体
         public class OrderData
@@ -159,7 +157,7 @@ namespace ZXY_ZXSC
             public string NeedWeighted { get; set; }
             public string ActualCount { get; set; }
             public string QualityTime { get; set; }
-            public int OrderCount { set; get; }
+            public string OrderCount { set; get; }
             public int ScOrderID { set; get; }
             public float SellingPrice { set; get; }
             public int ScProductID { set; get; }
