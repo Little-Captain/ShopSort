@@ -745,6 +745,9 @@ namespace ZXY_ZXSC
         //rediobutton事件
         private void rioCP_CheckedChanged(object sender, EventArgs e)
         {
+            // 置零所有的滚动记录
+            vScrollIndex1 = 0;
+            vScrollIndex2 = 0;
             if (rioCP.Checked)
             {
                 btn_print.Visible = false;
@@ -763,6 +766,9 @@ namespace ZXY_ZXSC
         //选择路线
         private void com_lx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // 置零所有的滚动记录
+            vScrollIndex1 = 0;
+            vScrollIndex2 = 0;
             if (rioCP.Checked)
             {
                 type = 2;
@@ -775,7 +781,6 @@ namespace ZXY_ZXSC
                 sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByProductURL);
             }
-
         }
 
         private void btn_history_Click(object sender, EventArgs e)
@@ -891,6 +896,11 @@ namespace ZXY_ZXSC
                 type = 1;
                 sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByProductURL);
+                if (vScrollIndex1 >= dataGridView1.Rows.Count)
+                {
+                    return;
+                }
+                dataGridView1.FirstDisplayedScrollingRowIndex = vScrollIndex1;
             }
             else if (type == 2)
             {
@@ -898,6 +908,11 @@ namespace ZXY_ZXSC
                 type = 2;
                 sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByOrderURL);
+                if (vScrollIndex2 >= dataGridView1.Rows.Count)
+                {
+                    return;
+                }
+                dataGridView1.FirstDisplayedScrollingRowIndex = vScrollIndex2;
             }
         }
 
@@ -953,6 +968,26 @@ namespace ZXY_ZXSC
                 list.Add(new ToolStripMenuItem(name, null, new EventHandler(portbtn_click)));
             }
             serialMenuItem.DropDownItems.AddRange(list.ToArray());
+        }
+
+        // type == 1
+        int vScrollIndex1 = 0;
+        // type == 2
+        int vScrollIndex2 = 0;
+
+        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.ScrollOrientation == ScrollOrientation.VerticalScroll)
+            {
+                if (type == 1)
+                {
+                    vScrollIndex1 = e.NewValue;
+                }
+                if (type == 2)
+                {
+                    vScrollIndex2 = e.NewValue;
+                }
+            }
         }
     }
 }
