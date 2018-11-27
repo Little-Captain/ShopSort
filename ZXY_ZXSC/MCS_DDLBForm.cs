@@ -25,6 +25,10 @@ namespace ZXY_ZXSC
             InitializeComponent();
             this.Text += System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
+
+        // 是否已打印
+        bool isPrinted = false;
+
         public string ddurl = "";//接口url
         string scOrderId = "";//订单id
         string jsonstr = "";
@@ -220,6 +224,10 @@ namespace ZXY_ZXSC
         //打印方法
         private void print(DataRow[] myrows)//打印报表
         {
+            if (isPrinted && MessageBox.Show("已提交打印，是否还要打印?", "重复打印", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
             try
             {
                 DataTable myprinttable = myrows.CopyToDataTable();
@@ -244,6 +252,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
+                        isPrinted = true;
                         BForm.startPrint();
                     }
                 }
