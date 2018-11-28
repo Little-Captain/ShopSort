@@ -186,6 +186,42 @@
   <data name="&gt;&gt;btn_history.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="btn_print_all.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btn_print_all.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btn_print_all.Font" type="System.Drawing.Font, System.Drawing">
+    <value>SimSun, 15pt, style=Bold</value>
+  </data>
+  <data name="btn_print_all.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btn_print_all.Location" type="System.Drawing.Point, System.Drawing">
+    <value>617, 31</value>
+  </data>
+  <data name="btn_print_all.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 46</value>
+  </data>
+  <data name="btn_print_all.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="btn_print_all.Text" xml:space="preserve">
+    <value>打印(总计)</value>
+  </data>
+  <data name="&gt;&gt;btn_print_all.Name" xml:space="preserve">
+    <value>btn_print_all</value>
+  </data>
+  <data name="&gt;&gt;btn_print_all.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_print_all.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;btn_print_all.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="btn_print.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -217,7 +253,7 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;btn_print.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="rioDD.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -247,7 +283,7 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;rioDD.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="rioCP.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -277,7 +313,7 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;rioCP.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="com_lx.Font" type="System.Drawing.Font, System.Drawing">
     <value>SimSun, 21.75pt, style=Bold</value>
@@ -301,7 +337,7 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;com_lx.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>

@@ -46,6 +46,7 @@
             this.settingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_print_all = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -62,6 +63,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.btn_history);
+            this.panel1.Controls.Add(this.btn_print_all);
             this.panel1.Controls.Add(this.btn_print);
             this.panel1.Controls.Add(this.rioDD);
             this.panel1.Controls.Add(this.rioCP);
@@ -196,6 +198,16 @@
             this.serialMenuItem.Name = "serialMenuItem";
             resources.ApplyResources(this.serialMenuItem, "serialMenuItem");
             // 
+            // btn_print_all
+            // 
+            resources.ApplyResources(this.btn_print_all, "btn_print_all");
+            this.btn_print_all.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btn_print_all.FlatAppearance.BorderSize = 0;
+            this.btn_print_all.ForeColor = System.Drawing.Color.White;
+            this.btn_print_all.Name = "btn_print_all";
+            this.btn_print_all.UseVisualStyleBackColor = false;
+            this.btn_print_all.Click += new System.EventHandler(this.btn_print_all_Click);
+            // 
             // MCS_Index
             // 
             resources.ApplyResources(this, "$this");
@@ -235,5 +247,6 @@
         private System.Windows.Forms.ToolStripMenuItem settingMenuItem;
         private System.Windows.Forms.ToolStripMenuItem previewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serialMenuItem;
+        private System.Windows.Forms.Button btn_print_all;
     }
 }

@@ -107,7 +107,7 @@ namespace ZXY_ZXSC
             routeURL = baseURL + "listRouteDesktop.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4";
             requestGetJson(routeURL);
 
-            btn_print.Visible = false;
+            setPrintBtnVisible(false);
             type = 2;
             sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
             requestGetJson(sortByOrderURL);
@@ -152,8 +152,50 @@ namespace ZXY_ZXSC
                 System.Environment.Exit(System.Environment.ExitCode);
             }
         }
-        //打印
-        private void btn_print_Click(object sender, EventArgs e)
+
+        private Dictionary<string, string> AllProductSum(string[] keys)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            foreach (string key in keys)
+            {
+                dict.Add(key, "0");
+            }
+
+            string url = baseURL + "sorteOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4";
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                StreamReader stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                jsonstr = stream.ReadLine();
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                if (jsonstr != null)
+                {
+                    ProductPrintData pruductPrintData = js.Deserialize<ProductPrintData>(jsonstr);
+                    if (pruductPrintData.status.ToString().Equals("200"))
+                    {
+                        List<ProductPrint> ProductList = pruductPrintData.data;
+                        for (int i = 0; i < ProductList.Count; i++)
+                        {
+                            ProductPrint p = ProductList[i];
+                            if (keys.Contains(p.ShowProductName))
+                            {
+                                dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return dict;
+            }
+
+            return dict;
+        }
+
+        private void PrePrintProduct(bool needSum)
         {
             try
             {
@@ -169,7 +211,7 @@ namespace ZXY_ZXSC
                     type = 1;
                     if (prePrintProductTable.Rows.Count > 0)
                     {
-
+                        List<String> keys = new List<string>();
                         tableCP.Columns.Add("门店");
                         //使用方法
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -180,7 +222,9 @@ namespace ZXY_ZXSC
                                 {
                                     if (tableCP.Columns.Count < 6)
                                     {
-                                        tableCP.Columns.Add(dataGridView1.Rows[i].Cells["产品名称"].Value.ToString() + "(" + dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")");
+                                        string key = dataGridView1.Rows[i].Cells["产品名称"].Value.ToString() + "(" + dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")";
+                                        keys.Add(key);
+                                        tableCP.Columns.Add(key);
                                     }
                                     else
                                     {
@@ -256,6 +300,19 @@ namespace ZXY_ZXSC
                             sumRow[ColumnName] = d;
                         }
                         tableCP.Rows.Add(sumRow);
+
+                        if (needSum)
+                        {
+                            Dictionary<string, string> dict = AllProductSum(keys.ToArray());
+                            DataRow AllSum = tableCP.NewRow();
+                            AllSum["门店"] = "总合计";
+                            foreach (string key in keys)
+                            {
+                                AllSum[key] = double.Parse(dict[key]);
+                            }
+                            tableCP.Rows.Add(AllSum);
+                        }
+
                         DataRow[] tableCPRow = tableCP.Select("1=1");
                         tableDD.Clear();
                         DataRow rows = tableDD.NewRow();
@@ -278,6 +335,12 @@ namespace ZXY_ZXSC
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dataGridView1.DataSource = null; }
+        }
+
+        //打印
+        private void btn_print_Click(object sender, EventArgs e)
+        {
+            PrePrintProduct(false);
         }
         private double ColumnSum(DataTable dt, string ColumnName)
         {
@@ -364,6 +427,14 @@ namespace ZXY_ZXSC
             public string ProductName { set; get; }//产品名称
             public string Remark { set; get; }//备注
             public int OrderNum { set; get; } // 顺序
+
+            public string ShowProductName
+            {
+                get
+                {
+                    return ProductName + "(" + Unit + ")";
+                }
+            }
         }
         public class ProductPrintData
         {
@@ -738,19 +809,26 @@ namespace ZXY_ZXSC
             vScrollIndex2 = 0;
             if (rioCP.Checked)
             {
-                btn_print.Visible = false;
+                setPrintBtnVisible(false);
                 type = 2;
                 sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByOrderURL);
             }
             else if (rioDD.Checked)
             {
-                btn_print.Visible = true;
+                setPrintBtnVisible(true);
                 type = 1;
                 sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByProductURL);
             }
         }
+
+        void setPrintBtnVisible(bool visible)
+        {
+            btn_print.Visible = visible;
+            btn_print_all.Visible = visible;
+        }
+
         //选择路线
         private void com_lx_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -880,7 +958,7 @@ namespace ZXY_ZXSC
         {
             if (type == 1)
             {
-                btn_print.Visible = true;
+                setPrintBtnVisible(true);
                 type = 1;
                 sortByProductURL = baseURL + "sorteByProduct.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByProductURL);
@@ -892,7 +970,7 @@ namespace ZXY_ZXSC
             }
             else if (type == 2)
             {
-                btn_print.Visible = false;
+                setPrintBtnVisible(false);
                 type = 2;
                 sortByOrderURL = baseURL + "sorteByOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
                 requestGetJson(sortByOrderURL);
@@ -976,6 +1054,11 @@ namespace ZXY_ZXSC
                     vScrollIndex2 = e.NewValue;
                 }
             }
+        }
+
+        private void btn_print_all_Click(object sender, EventArgs e)
+        {
+            PrePrintProduct(true);
         }
     }
 }
