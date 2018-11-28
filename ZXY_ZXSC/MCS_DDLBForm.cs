@@ -209,7 +209,6 @@ namespace ZXY_ZXSC
                         string dw = item["分拣单位"].ToString();
                         string fjsl = item["分拣数量"].ToString();
                         item["分拣数量"] = fjsl + dw;
-                        //item["总价"] = decimal.Parse(item["单价"].ToString()) * decimal.Parse(item["分拣数量"].ToString());
                     }
                     print(myrows);//打印报表
                 }
@@ -742,19 +741,9 @@ namespace ZXY_ZXSC
                         MessageBox.Show("该订单还有未确认的产品，不可打印！");
                         return;
                     }
-                    //for (int i = 0; i < cpPrint.Rows.Count; i++)
-                    //{
-                    //    if (cpPrint.Rows[i]["分拣确认"].ToString() == "已确认")
-                    //    {
-                    //        myrows = cpPrint.Select("分拣确认='已确认'");
-                    //    }
-                    //    else
-                    //    {
-                    //        MessageBox.Show("该订单还有未确认的产品，不可打印！");
-                    //        return;
-                    //    }
-                    //}
                     int num = 0;
+                    DataRow lastRow = cpPrint.NewRow();
+                    lastRow["总价"] = (decimal)0;
                     foreach (DataRow item in cpPrint.Rows)
                     {
                         num++;
@@ -786,13 +775,20 @@ namespace ZXY_ZXSC
                                 item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
                             }
                         }
-                        item["总价"] = decimal.Parse(item["单价"].ToString()) * decimal.Parse(item["分拣数量"].ToString());
+                        decimal mult = decimal.Parse(item["单价"].ToString()) * decimal.Parse(item["分拣数量"].ToString());
+
+                        item["总价"] = mult;
+
+                        lastRow["总价"] = decimal.Parse(lastRow["总价"].ToString()) + mult;
 
                         string dw = item["分拣单位"].ToString();
                         string fjsl = item["分拣数量"].ToString();
                         item["分拣数量"] = fjsl + dw;
                     }
-                    print(myrows);//打印报表
+                    List<DataRow> list = new List<DataRow>();
+                    list.AddRange(myrows);
+                    list.Add(lastRow);
+                    print(list.ToArray());//打印报表
                 }
                 else
                 {
