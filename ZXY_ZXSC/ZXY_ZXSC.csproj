@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ZXY_ZXSC</RootNamespace>
-    <AssemblyName>ZXY_ZXSC</AssemblyName>
+    <AssemblyName>智能分拣</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -170,20 +170,13 @@
     <Compile Include="MCS_DDLBListForm.Designer.cs">
       <DependentUpon>MCS_DDLBListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="update.cs" />
-    <Compile Include="updateVersion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="updateVersion.Designer.cs">
-      <DependentUpon>updateVersion.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Update.cs" />
     <Compile Include="Welcome.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Welcome.Designer.cs">
       <DependentUpon>Welcome.cs</DependentUpon>
     </Compile>
-    <Compile Include="zipHelper.cs" />
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,9 +208,6 @@
     <EmbeddedResource Include="MCS_DDLBListForm.resx">
       <DependentUpon>MCS_DDLBListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="updateVersion.resx">
-      <DependentUpon>updateVersion.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Welcome.resx">
       <DependentUpon>Welcome.cs</DependentUpon>
     </EmbeddedResource>
@@ -240,7 +230,6 @@
   <ItemGroup>
     <None Include="Resources\管理过程控制系统201302081.jpg" />
     <None Include="Resources\登录界面_银灰.png" />
-    <Content Include="version.xml" />
     <Content Include="zxgc.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -21,8 +21,8 @@ namespace ZXY_ZXSC
         {
             InitializeComponent();
 
-            //this.Text += System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            //checkUpdate();//检查更新
+            this.Text += System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            checkUpdate();//检查更新
         }
 
         // 0：路线  1：产品  2：订单
@@ -138,30 +138,18 @@ namespace ZXY_ZXSC
         //检查更新
         public void checkUpdate()
         {
-            SoftUpdate app = new SoftUpdate(Application.ExecutablePath, "BlogWriter");
-            try
+            if (UpdateTool.needUpdate())
             {
-                if (app.IsUpdate && MessageBox.Show("检查到新版本，是否更新？", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    //更新（调用更新的exe，这个是单独的一个程序，下面再说怎么写）
-                    string fileName = Application.StartupPath + @"\Updata.exe";
-                    Process p = new Process();
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.FileName = fileName;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.StartInfo.Arguments = "";//参数以空格分隔，如果某个参数为空，可以传入””
-                    p.Start();
-                    System.Environment.Exit(System.Environment.ExitCode);   //结束主线程
-                                                                            // p.WaitForExit(); //这里就不能等他结束了
-                                                                            // string output = p.StandardOutput.ReadToEnd(); //this.Dispose();//关闭主程序
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                ProcessStartInfo startInfo = new ProcessStartInfo(System.Environment.CurrentDirectory + @"\Updating\Updating.exe");
+                startInfo.WindowStyle = ProcessWindowStyle.Normal;
+                startInfo.WorkingDirectory = System.Environment.CurrentDirectory;
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.Arguments = UpdateTool.downloadURL + " " + Path.GetFileName(Application.ExecutablePath);
+                Process p = new Process();
+                p.StartInfo = startInfo;
+                p.Start();
+                System.Environment.Exit(System.Environment.ExitCode);
             }
         }
         //打印
