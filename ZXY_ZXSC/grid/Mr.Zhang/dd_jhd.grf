@@ -88,10 +88,16 @@
 			End
 		End
 		Object ColumnContent
-			Height=0.608542
+			Height=0.79375
 			Items ColumnContentCell
 				Item
 					Column='Column2'
+					Object Font
+						Name='宋体'
+						Size=127500,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					CanGrow=T
@@ -100,18 +106,36 @@
 				End
 				Item
 					Column='Column4'
+					Object Font
+						Name='宋体'
+						Size=127500,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C2'
 				End
 				Item
 					Column='Column5'
+					Object Font
+						Name='宋体'
+						Size=127500,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C3'
 				End
 				Item
 					Column='Column6'
+					Object Font
+						Name='宋体'
+						Size=127500,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C4'
@@ -128,7 +152,7 @@
 					Column='Column2'
 					Object Font
 						Name='宋体'
-						Size=105000,0
+						Size=127500,0
 						Bold=T
 						Charset=134
 					End
@@ -142,7 +166,7 @@
 					Column='Column4'
 					Object Font
 						Name='宋体'
-						Size=105000,0
+						Size=127500,0
 						Bold=T
 						Charset=134
 					End
@@ -156,7 +180,7 @@
 					Column='Column5'
 					Object Font
 						Name='宋体'
-						Size=105000,0
+						Size=127500,0
 						Bold=T
 						Charset=134
 					End
@@ -170,7 +194,7 @@
 					Column='Column6'
 					Object Font
 						Name='宋体'
-						Size=105000,0
+						Size=127500,0
 						Bold=T
 						Charset=134
 					End
