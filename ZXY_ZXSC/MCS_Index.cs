@@ -153,6 +153,54 @@ namespace ZXY_ZXSC
             }
         }
 
+        private List<Dictionary<string, string>> CustomersProductSum(string[] keys)
+        {
+            List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
+
+            string url = baseURL + "sorteOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                StreamReader stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                jsonstr = stream.ReadLine();
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                if (jsonstr != null)
+                {
+                    ProductPrintData result = js.Deserialize<ProductPrintData>(jsonstr);
+                    if (result.status.ToString().Equals("200"))
+                    {
+                        result.data.ForEach(p =>
+                        {
+                            if (keys.Contains(p.ShowProductName))
+                            {
+                                Dictionary<string, string> dict = list.Find(d => d["门店"].Equals(p.DepartmentName));
+                                if (dict == null)
+                                {
+                                    dict = new Dictionary<string, string>();
+                                    dict["门店"] = p.DepartmentName;
+                                    dict["备注"] = p.Remark;
+                                    foreach (string key in keys)
+                                    {
+                                        dict.Add(key, "0");
+                                    }
+                                    list.Add(dict);
+                                }
+                                dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
+                            }
+                        });
+                    }
+                }
+            }
+            catch
+            {
+                return list;
+            }
+
+            return list;
+        }
+
         private Dictionary<string, string> AllProductSum(string[] keys)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -432,7 +480,14 @@ namespace ZXY_ZXSC
             {
                 get
                 {
-                    return ProductName + "(" + Unit + ")";
+                    if (ProductName.Equals("卤鹅(加调料)"))
+                    {
+                        return "卤鹅" + "(" + Unit + ")";
+                    }
+                    else
+                    {
+                        return ProductName + "(" + Unit + ")";
+                    }
                 }
             }
         }

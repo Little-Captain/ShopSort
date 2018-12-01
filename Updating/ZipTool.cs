@@ -11,9 +11,10 @@ namespace Updating
     {
         public static void unzip(string dir, string filename, EventHandler<ExtractProgressEventArgs> progressHandle)
         {
+            ZipFile zip = null;
             try
             {
-                ZipFile zip = new ZipFile(dir + @"\" + filename);
+                zip = new ZipFile(dir + @"\" + filename);
                 zip.ExtractProgress += progressHandle;
                 zip.ExtractAll(dir, ExtractExistingFileAction.OverwriteSilently);
             }
@@ -21,6 +22,11 @@ namespace Updating
             {
                 MessageBox.Show("错误码：003\n" + ex.ToString(), "更新出现故障");
                 System.Environment.Exit(System.Environment.ExitCode);
+            }
+            finally
+            {
+                // 清理资源占用
+                zip?.Dispose();
             }
         }
     }
