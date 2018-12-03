@@ -134,7 +134,6 @@ namespace ZXY_ZXSC
             }
         }
 
-
         //检查更新
         public void checkUpdate()
         {
@@ -153,7 +152,7 @@ namespace ZXY_ZXSC
             }
         }
 
-        private List<Dictionary<string, string>> CustomersProductSum(string[] keys)
+        private List<Dictionary<string, string>> CustomersProductSum(string[] keys, bool needAllSum)
         {
             List<Dictionary<string, string>> list = new List<Dictionary<string, string>>();
 
@@ -171,25 +170,27 @@ namespace ZXY_ZXSC
                     ProductPrintData result = js.Deserialize<ProductPrintData>(jsonstr);
                     if (result.status.ToString().Equals("200"))
                     {
-                        result.data.ForEach(p =>
-                        {
-                            if (keys.Contains(p.ShowProductName))
-                            {
-                                Dictionary<string, string> dict = list.Find(d => d["门店"].Equals(p.DepartmentName));
-                                if (dict == null)
+                        list = result.data
+                            .Where(p => keys.Contains(p.ShowProductName))
+                            .GroupBy(p => p.DepartmentName)
+                            .Select(g => {
+                                ProductPrint[] ps = g.ToArray();
+                                Dictionary<string, string> dict = new Dictionary<string, string>
                                 {
-                                    dict = new Dictionary<string, string>();
-                                    dict["门店"] = p.DepartmentName;
-                                    dict["备注"] = p.Remark;
-                                    foreach (string key in keys)
-                                    {
-                                        dict.Add(key, "0");
-                                    }
-                                    list.Add(dict);
+                                    ["门店"] = ps[0].DepartmentName,
+                                    ["备注"] = ps[0].Remark,
+                                };
+                                foreach (string key in keys)
+                                {
+                                    dict.Add(key, "0");
                                 }
-                                dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
-                            }
-                        });
+                                foreach (ProductPrint p in ps)
+                                {
+                                    dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
+                                }
+                                return dict;
+                            })
+                            .ToList();
                     }
                 }
             }
@@ -198,12 +199,39 @@ namespace ZXY_ZXSC
                 return list;
             }
 
+            Dictionary<string, string> sumDict = new Dictionary<string, string>
+            {
+                ["门店"] = "合计",
+                ["备注"] = ""
+            };
+            foreach (string key in keys)
+            {
+                sumDict.Add(key, "0");
+            }
+            foreach (var dict in list)
+            {
+                foreach (string key in keys)
+                {
+                    sumDict[key] = (decimal.Parse(sumDict[key]) + decimal.Parse(dict[key])).ToString();
+                }
+            }
+            list.Add(sumDict);
+
+            if (needAllSum)
+            {
+                list.Add(AllProductSum(keys));
+            }
+
             return list;
         }
 
         private Dictionary<string, string> AllProductSum(string[] keys)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Dictionary<string, string> dict = new Dictionary<string, string>
+            {
+                ["门店"] = "总合计",
+                ["备注"] = ""
+            };
             foreach (string key in keys)
             {
                 dict.Add(key, "0");
@@ -220,17 +248,15 @@ namespace ZXY_ZXSC
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 if (jsonstr != null)
                 {
-                    ProductPrintData pruductPrintData = js.Deserialize<ProductPrintData>(jsonstr);
-                    if (pruductPrintData.status.ToString().Equals("200"))
+                    ProductPrintData result = js.Deserialize<ProductPrintData>(jsonstr);
+                    if (result.status.ToString().Equals("200"))
                     {
-                        List<ProductPrint> ProductList = pruductPrintData.data;
-                        for (int i = 0; i < ProductList.Count; i++)
+                        List<ProductPrint> ProductList = result.data
+                            .Where(p => keys.Contains(p.ShowProductName))
+                            .ToList();
+                        foreach (var p in ProductList)
                         {
-                            ProductPrint p = ProductList[i];
-                            if (keys.Contains(p.ShowProductName))
-                            {
-                                dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
-                            }
+                            dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
                         }
                     }
                 }
@@ -249,137 +275,81 @@ namespace ZXY_ZXSC
             {
                 if (type == 1)
                 {
-                    //MessageBox.Show("推荐最多选择5个产品！");
-                    try { tableCP.Clear(); tableCP.Columns.Clear(); } catch { }
-
-                    type = 3;
-                    prePrintProductTable.Clear();
-                    prePrintProductURL = baseURL + "sorteOrder.html?companyId=" + ConfigurationManager.AppSettings["companyId"] + "&isFrom=4&scRouteId=" + com_lx.SelectedValue + "";
-                    requestGetJson(prePrintProductURL);
-                    type = 1;
-                    if (prePrintProductTable.Rows.Count > 0)
+                    try
                     {
-                        List<String> keys = new List<string>();
-                        tableCP.Columns.Add("门店");
-                        //使用方法
-                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                        tableCP.Clear();
+                        tableCP.Columns.Clear();
+                    }
+                    catch { }
+
+                    List<String> keys = new List<string>();
+                    tableCP.Columns.Add("门店");
+                    //使用方法
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        try
                         {
-                            try
+                            if (dataGridView1.Rows[i].Cells["选择"].Value.ToString() == "True")
                             {
-                                if (dataGridView1.Rows[i].Cells["选择"].Value.ToString() == "True")
+                                if (tableCP.Columns.Count < 6)
                                 {
-                                    if (tableCP.Columns.Count < 6)
-                                    {
-                                        string key = dataGridView1.Rows[i].Cells["产品名称"].Value.ToString() + "(" + dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")";
-                                        keys.Add(key);
-                                        tableCP.Columns.Add(key);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("推荐最多选择5个产品！");
-                                        break;
-                                    }
-                                }
-                            }
-                            catch { continue; }
-                        }
-                        if (tableCP.Columns.Count == 1)
-                        {
-                            MessageBox.Show("暂未选择产品");
-                        }
-                        tableCP.Columns.Add("备注");
-
-                        //添加行
-                        for (int i = 0; i < prePrintProductTable.Rows.Count; i++)
-                        {
-                            string customerName = prePrintProductTable.Rows[i]["客户名称"].ToString();
-                            string prodName = prePrintProductTable.Rows[i]["产品名称"].ToString() + "(" + prePrintProductTable.Rows[i]["单位"].ToString() + ")";
-                            double sl = double.Parse(prePrintProductTable.Rows[i]["下单数量"].ToString());
-                            string remark = prePrintProductTable.Rows[i]["备注"].ToString();
-                            DataRow[] arrChkExist = tableCP.Select("门店='" + customerName + "'");
-
-                            if (tableCP.Columns.Contains(prodName))
-                            {
-                                if (arrChkExist.Length > 0)
-                                {
-                                    double currentSL = 0;
-                                    //string currentRemark = "";
-
-                                    try { currentSL = double.Parse(arrChkExist[0][prodName].ToString()); } catch { }
-                                    //try { currentRemark = arrChkExist[0]["备注"].ToString(); } catch { }
-
-                                    //if (remark.Trim().Length > 0)
-                                    //{
-                                    //    if (currentRemark.Trim().Length > 0)
-                                    //        remark = remark + "," + currentRemark;
-                                    //}
-
-                                    arrChkExist[0][prodName] = currentSL + sl;
-                                    //if (remark.Trim().Length > 0)
-                                    arrChkExist[0]["备注"] = remark;
+                                    string key = dataGridView1.Rows[i].Cells["产品名称"].Value.ToString() + "(" + dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")";
+                                    keys.Add(key);
+                                    tableCP.Columns.Add(key);
                                 }
                                 else
                                 {
-                                    DataRow dr = tableCP.NewRow();
-                                    dr["门店"] = customerName;
-
-
-                                    dr[prodName] = sl;
-                                    dr["备注"] = remark;
-
-                                    tableCP.Rows.Add(dr);
+                                    MessageBox.Show("推荐最多选择5个产品！");
+                                    break;
                                 }
                             }
                         }
-
-                        DataRow sumRow = tableCP.NewRow();
-                        sumRow["门店"] = "合计";
-                        for (int i = 1; i < tableCP.Columns.Count - 1; i++)
+                        catch
                         {
-                            string ColumnName = tableCP.Columns[i].ToString();
-                            double d = 0;
-                            foreach (DataRow row in tableCP.Rows)
+                            continue;
+                        }
+                    }
+
+                    if (tableCP.Columns.Count == 1)
+                    {
+                        MessageBox.Show("暂未选择产品");
+                        return;
+                    }
+
+                    tableCP.Columns.Add("备注");
+
+                    foreach (var dict in CustomersProductSum(keys.ToArray(), needSum))
+                    {
+                        DataRow row = tableCP.NewRow();
+                        row["门店"] = dict["门店"];
+                        row["备注"] = dict["备注"];
+                        foreach (var key in keys)
+                        {
+                            string value = dict[key];
+                            if (value.Equals("0"))
                             {
-                                if (row[ColumnName].ToString().Trim() != "")
-                                {
-                                    d += double.Parse(row[ColumnName].ToString());
-                                }
-                            }
-                            sumRow[ColumnName] = d;
-                        }
-                        tableCP.Rows.Add(sumRow);
-
-                        if (needSum)
-                        {
-                            Dictionary<string, string> dict = AllProductSum(keys.ToArray());
-                            DataRow AllSum = tableCP.NewRow();
-                            AllSum["门店"] = "总合计";
-                            foreach (string key in keys)
+                                row[key] = "";
+                            } else
                             {
-                                AllSum[key] = double.Parse(dict[key]);
+                                row[key] = dict[key];
                             }
-                            tableCP.Rows.Add(AllSum);
                         }
+                        tableCP.Rows.Add(row);
+                    }
 
-                        DataRow[] tableCPRow = tableCP.Select("1=1");
-                        tableDD.Clear();
-                        DataRow rows = tableDD.NewRow();
-                        if (DateTime.Now.Hour >= 12)
-                        {
-                            rows["打印标题"] = "订货计划" + DateTime.Now.AddDays(1).ToString("(yyyy年MM月dd)");
-                        }
-                        else
-                        {
-                            rows["打印标题"] = "订货计划" + DateTime.Now.ToString("(yyyy年MM月dd)");
-                        }
-                        tableDD.Rows.Add(rows);
-                        print(tableCPRow);
+                    DataRow[] tableCPRow = tableCP.Select("1=1");
+                    tableDD.Clear();
+                    DataRow rows = tableDD.NewRow();
+                    if (DateTime.Now.Hour >= 12)
+                    {
+                        rows["打印标题"] = "订货计划" + DateTime.Now.AddDays(1).ToString("(yyyy年MM月dd)");
                     }
                     else
                     {
-                        MessageBox.Show("暂无数据！");
-                        type = 1;
+                        rows["打印标题"] = "订货计划" + DateTime.Now.ToString("(yyyy年MM月dd)");
                     }
+                    tableDD.Rows.Add(rows);
+                    print(tableCPRow);
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); dataGridView1.DataSource = null; }
