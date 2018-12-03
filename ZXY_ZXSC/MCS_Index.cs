@@ -316,6 +316,16 @@ namespace ZXY_ZXSC
                         return;
                     }
 
+                    for (int i = tableCP.Columns.Count; i < 6; i++)
+                    {
+                        StringBuilder bulder = new StringBuilder();
+                        for (int j = 0; j < i; j++)
+                        {
+                            bulder.Append(" ");
+                        }
+                        tableCP.Columns.Add(bulder.ToString());
+                    }
+
                     tableCP.Columns.Add("备注");
 
                     foreach (var dict in CustomersProductSum(keys.ToArray(), needSum))
