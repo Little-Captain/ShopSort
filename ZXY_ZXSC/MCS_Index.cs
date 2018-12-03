@@ -177,8 +177,7 @@ namespace ZXY_ZXSC
                                 ProductPrint[] ps = g.ToArray();
                                 Dictionary<string, string> dict = new Dictionary<string, string>
                                 {
-                                    ["门店"] = ps[0].DepartmentName,
-                                    ["备注"] = ps[0].Remark,
+                                    ["门店"] = ps[0].DepartmentName
                                 };
                                 foreach (string key in keys)
                                 {
@@ -186,6 +185,7 @@ namespace ZXY_ZXSC
                                 }
                                 foreach (ProductPrint p in ps)
                                 {
+                                    dict["备注"] = p.Remark;
                                     dict[p.ShowProductName] = (decimal.Parse(dict[p.ShowProductName]) + decimal.Parse(p.OrderCount)).ToString();
                                 }
                                 return dict;
