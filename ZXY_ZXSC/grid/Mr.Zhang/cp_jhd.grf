@@ -76,27 +76,31 @@
 			End
 			Item
 				Name='Column4'
-				Width=2.4
+				Width=2
 			End
 			Item
 				Name='Column5'
-				Width=2.4
+				Width=2
 			End
 			Item
 				Name='Column6'
-				Width=2.4
+				Width=2
 			End
 			Item
 				Name='Column7'
-				Width=2.4
+				Width=2
 			End
 			Item
 				Name='Column8'
-				Width=2.4
+				Width=2
 			End
 			Item
 				Name='Column9'
-				Width=6
+				Width=2
+			End
+			Item
+				Name='Column10'
+				Width=3.33375
 			End
 		End
 		Object ColumnContent
@@ -180,13 +184,25 @@
 					Column='Column9'
 					Object Font
 						Name='宋体'
-						Size=120000,0
+						Size=150000,0
 						Weight=400
 						Charset=134
 					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C7'
+				End
+				Item
+					Column='Column10'
+					Object Font
+						Name='宋体'
+						Size=120000,0
+						Weight=400
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					DataField='C8'
 				End
 			End
 		End
@@ -286,6 +302,19 @@
 					WordWrap=T
 					TextAlign=MiddleCenter
 					Text='[#{C7}#]'
+				End
+				Item
+					GroupTitle=F
+					Column='Column10'
+					Object Font
+						Name='宋体'
+						Size=105000,0
+						Bold=T
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					Text='[#{C8}#]'
 				End
 			End
 		End

@@ -284,6 +284,8 @@ namespace ZXY_ZXSC
 
                     List<String> keys = new List<string>();
                     tableCP.Columns.Add("门店");
+                    // 最多选择的产品数量
+                    int productLimitCount = 6;
                     //使用方法
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
@@ -291,7 +293,7 @@ namespace ZXY_ZXSC
                         {
                             if (dataGridView1.Rows[i].Cells["选择"].Value.ToString() == "True")
                             {
-                                if (tableCP.Columns.Count < 6)
+                                if (tableCP.Columns.Count < productLimitCount + 1)
                                 {
                                     string key = dataGridView1.Rows[i].Cells["产品名称"].Value.ToString() + "(" + dataGridView1.Rows[i].Cells["单位"].Value.ToString() + ")";
                                     keys.Add(key);
@@ -299,7 +301,7 @@ namespace ZXY_ZXSC
                                 }
                                 else
                                 {
-                                    MessageBox.Show("推荐最多选择5个产品！");
+                                    MessageBox.Show(string.Format("推荐最多选择{0}个产品！", productLimitCount));
                                     break;
                                 }
                             }
@@ -316,7 +318,7 @@ namespace ZXY_ZXSC
                         return;
                     }
 
-                    for (int i = tableCP.Columns.Count; i < 6; i++)
+                    for (int i = tableCP.Columns.Count; i < productLimitCount + 1; i++)
                     {
                         StringBuilder bulder = new StringBuilder();
                         for (int j = 0; j < i; j++)
@@ -460,14 +462,7 @@ namespace ZXY_ZXSC
             {
                 get
                 {
-                    if (ProductName.Equals("卤鹅(加调料)"))
-                    {
-                        return "卤鹅" + "(" + Unit + ")";
-                    }
-                    else
-                    {
-                        return ProductName + "(" + Unit + ")";
-                    }
+                    return ProductName + "(" + Unit + ")";
                 }
             }
         }
