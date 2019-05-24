@@ -285,7 +285,7 @@ namespace ZXY_ZXSC
                     List<String> keys = new List<string>();
                     tableCP.Columns.Add("门店");
                     // 最多选择的产品数量
-                    int productLimitCount = 6;
+                    int productLimitCount = 8;
                     //使用方法
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
@@ -334,7 +334,7 @@ namespace ZXY_ZXSC
                     {
                         DataRow row = tableCP.NewRow();
                         row["门店"] = dict["门店"];
-                        row["备注"] = dict["备注"];
+                        row["备注"] = "备注: " + dict["备注"];
                         foreach (var key in keys)
                         {
                             string value = dict[key];

@@ -72,26 +72,48 @@
 		Items Column
 			Item
 				Name='Column2'
-				Width=4.18042
+				Width=3.57188
 			End
 			Item
 				Name='Column4'
-				Width=4.18042
+				Width=2
 			End
 			Item
 				Name='Column5'
-				Width=4.81542
+				Width=2
 			End
 			Item
 				Name='Column6'
-				Width=4.39208
+				Width=2
+			End
+			Item
+				Name='Column7'
+				Width=2
+			End
+			Item
+				Name='Column8'
+				Width=2
+			End
+			Item
+				Name='Column9'
+				Width=2
+			End
+			Item
+				Name='Column10'
+				Width=3.33375
 			End
 		End
 		Object ColumnContent
-			Height=0.608542
+			Height=1
 			Items ColumnContentCell
 				Item
 					Column='Column2'
+					Object Font
+						Name='宋体'
+						Size=120000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					CanGrow=T
@@ -100,27 +122,93 @@
 				End
 				Item
 					Column='Column4'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C2'
 				End
 				Item
 					Column='Column5'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C3'
 				End
 				Item
 					Column='Column6'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
 					WordWrap=T
 					TextAlign=MiddleCenter
 					DataField='C4'
+				End
+				Item
+					Column='Column7'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					DataField='C5'
+				End
+				Item
+					Column='Column8'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					DataField='C6'
+				End
+				Item
+					Column='Column9'
+					Object Font
+						Name='宋体'
+						Size=150000,0
+						Weight=400
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					DataField='C7'
+				End
+				Item
+					Column='Column10'
+					Object Font
+						Name='宋体'
+						Size=120000,0
+						Weight=400
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					DataField='C8'
 				End
 			End
 		End
 		Object ColumnTitle
 			KeepTogether=F
-			Height=0.79375
+			Height=1.19063
 			RepeatStyle=OnPage
 			Items ColumnTitleCell
 				Item
@@ -148,7 +236,6 @@
 					End
 					WordWrap=T
 					TextAlign=MiddleCenter
-					CanGrow=T
 					Text='[#{C2}#]'
 				End
 				Item
@@ -162,7 +249,6 @@
 					End
 					WordWrap=T
 					TextAlign=MiddleCenter
-					CanGrow=T
 					Text='[#{C3}#]'
 				End
 				Item
@@ -176,34 +262,67 @@
 					End
 					WordWrap=T
 					TextAlign=MiddleCenter
-					CanGrow=T
 					Text='[#{C4}#]'
+				End
+				Item
+					GroupTitle=F
+					Column='Column7'
+					Object Font
+						Name='宋体'
+						Size=105000,0
+						Bold=T
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					Text='[#{C5}#]'
+				End
+				Item
+					GroupTitle=F
+					Column='Column8'
+					Object Font
+						Name='宋体'
+						Size=105000,0
+						Bold=T
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					Text='[#{C6}#]'
+				End
+				Item
+					GroupTitle=F
+					Column='Column9'
+					Object Font
+						Name='宋体'
+						Size=105000,0
+						Bold=T
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					Text='[#{C7}#]'
+				End
+				Item
+					GroupTitle=F
+					Column='Column10'
+					Object Font
+						Name='宋体'
+						Size=105000,0
+						Bold=T
+						Charset=134
+					End
+					WordWrap=T
+					TextAlign=MiddleCenter
+					Text='[#{C8}#]'
 				End
 			End
 		End
 	End
 	Object PageHeader
 		KeepTogether=F
-		Height=1.32
+		Height=0.211667
 		FormatScript='1'
-		Items Control
-			Item
-				Type=StaticBox
-				Name='StaticBox1'
-				Left=7.19667
-				Top=0.3
-				Width=7.80521
-				Height=0.79375
-				Object Font
-					Name='宋体'
-					Size=217500,0
-					Bold=T
-					Charset=134
-				End
-				GetDisplayTextScript='1'
-				Text='三惠威威拣货单'
-			End
-		End
 	End
 	Object PageFooter
 		Tag='1'
@@ -415,68 +534,30 @@
 			Name='CV9'
 		End
 		Item
-			Name='订单编号'
+			Name='打印标题'
 		End
 	End
 	Items ReportHeader
 		Item
 			Name='ReportHeader1'
 			KeepTogether=F
-			Height=1.00542
+			Height=1.32292
 			Items Control
 				Item
-					Type=StaticBox
-					Name='订单编号'
+					Type=MemoBox
+					Name='MemoBox3'
 					Left=0.211667
-					Top=0.291042
-					Width=2.59292
-					Height=0.608542
+					Top=0.211667
+					Width=21.1931
+					Height=0.978958
 					Object Font
 						Name='宋体'
-						Size=120000,0
+						Size=217500,0
 						Bold=T
 						Charset=134
 					End
-					Text='订单编号：'
-				End
-				Item
-					Type=StaticBox
-					Name='StaticBox2'
-					Left=10.0013
-					Top=0.291042
-					Width=2.59292
-					Height=0.608542
-					Object Font
-						Name='宋体'
-						Size=120000,0
-						Bold=T
-						Charset=134
-					End
-					Text='客户名称：'
-				End
-				Item
-					Type=MemoBox
-					Name='MemoBox1'
-					Left=2.40771
-					Top=0.291042
-					Width=7.19667
-					Height=0.608542
-					Text='[#{订单编号}#]'
-				End
-				Item
-					Type=MemoBox
-					Name='MemoBox2'
-					Left=12.409
-					Top=0.291042
-					Width=8.59896
-					Height=0.608542
-					Object Font
-						Name='宋体'
-						Size=142500,0
-						Weight=400
-						Charset=134
-					End
-					Text='[#{客户名称}#]'
+					TextAlign=MiddleCenter
+					Text='[#{打印标题}#]'
 				End
 			End
 		End
