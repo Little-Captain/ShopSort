@@ -94,7 +94,7 @@
 							Type=MemoBox
 							Name='MemoBox10'
 							Width=2.80458
-							Height=1.19
+							Height=2.01083
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -209,8 +209,9 @@
 						Item
 							Type=MemoBox
 							Name='MemoBox19'
+							Left=2.80458
 							Top=1.19063
-							Width=19.05
+							Width=16.2454
 							Height=0.820208
 							Object Border
 								Styles=[DrawTop]
