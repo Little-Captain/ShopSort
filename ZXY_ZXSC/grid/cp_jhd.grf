@@ -76,7 +76,7 @@
 			End
 		End
 		Object ColumnContent
-			Height=2.01083
+			Height=1.40229
 			Items ColumnContentCell
 				Item
 					Column='Column2'
@@ -94,7 +94,7 @@
 							Type=MemoBox
 							Name='MemoBox10'
 							Width=2.80458
-							Height=2.01083
+							Height=1.40229
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -107,7 +107,7 @@
 							Name='MemoBox11'
 							Left=2.80458
 							Width=2.14313
-							Height=1.19
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -120,7 +120,7 @@
 							Name='MemoBox12'
 							Left=4.94771
 							Width=2
-							Height=1.19
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -133,7 +133,7 @@
 							Name='MemoBox13'
 							Left=6.95854
 							Width=2
-							Height=1.19
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -146,7 +146,7 @@
 							Name='MemoBox14'
 							Left=8.96938
 							Width=2
-							Height=1.19
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -159,7 +159,7 @@
 							Name='MemoBox15'
 							Left=10.9538
 							Width=2
-							Height=1.19063
+							Height=0.8
 							Object Border
 								Styles=[DrawLeft|DrawRight]
 							End
@@ -172,7 +172,7 @@
 							Name='MemoBox16'
 							Left=12.9646
 							Width=2
-							Height=1.19063
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -185,7 +185,7 @@
 							Name='MemoBox17'
 							Left=14.9754
 							Width=2
-							Height=1.19063
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -198,7 +198,7 @@
 							Name='MemoBox18'
 							Left=16.9863
 							Width=2
-							Height=1.19063
+							Height=0.8
 							Object Border
 								Styles=[DrawRight]
 							End
@@ -210,9 +210,9 @@
 							Type=MemoBox
 							Name='MemoBox19'
 							Left=2.80458
-							Top=1.19063
-							Width=16.2454
-							Height=0.820208
+							Top=0.79375
+							Width=16.4042
+							Height=0.6
 							Object Border
 								Styles=[DrawTop]
 							End
