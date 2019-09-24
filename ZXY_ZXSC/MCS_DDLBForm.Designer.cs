@@ -51,6 +51,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.ck_open = new System.Windows.Forms.CheckBox();
             this.btn_history = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -75,7 +77,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.Menu;
             this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(385, 108);
+            this.label1.Location = new System.Drawing.Point(326, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(114, 20);
             this.label1.TabIndex = 0;
@@ -89,9 +91,9 @@
             this.btn_print.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_print.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn_print.ForeColor = System.Drawing.Color.White;
-            this.btn_print.Location = new System.Drawing.Point(804, 144);
+            this.btn_print.Location = new System.Drawing.Point(780, 144);
             this.btn_print.Name = "btn_print";
-            this.btn_print.Size = new System.Drawing.Size(83, 46);
+            this.btn_print.Size = new System.Drawing.Size(107, 46);
             this.btn_print.TabIndex = 7;
             this.btn_print.Text = "打印";
             this.btn_print.UseVisualStyleBackColor = false;
@@ -102,7 +104,7 @@
             this.lbl_time.AutoSize = true;
             this.lbl_time.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_time.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_time.Location = new System.Drawing.Point(505, 138);
+            this.lbl_time.Location = new System.Drawing.Point(440, 139);
             this.lbl_time.Name = "lbl_time";
             this.lbl_time.Size = new System.Drawing.Size(0, 21);
             this.lbl_time.TabIndex = 5;
@@ -113,7 +115,7 @@
             this.label5.BackColor = System.Drawing.SystemColors.Menu;
             this.label5.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(385, 139);
+            this.label5.Location = new System.Drawing.Point(326, 139);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(114, 20);
             this.label5.TabIndex = 4;
@@ -124,7 +126,7 @@
             this.lbl_ddh.AutoSize = true;
             this.lbl_ddh.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_ddh.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_ddh.Location = new System.Drawing.Point(138, 139);
+            this.lbl_ddh.Location = new System.Drawing.Point(127, 139);
             this.lbl_ddh.Name = "lbl_ddh";
             this.lbl_ddh.Size = new System.Drawing.Size(0, 21);
             this.lbl_ddh.TabIndex = 3;
@@ -135,7 +137,7 @@
             this.label3.BackColor = System.Drawing.SystemColors.Menu;
             this.label3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(26, 139);
+            this.label3.Location = new System.Drawing.Point(13, 139);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(114, 20);
             this.label3.TabIndex = 2;
@@ -146,7 +148,7 @@
             this.lbl_name.AutoSize = true;
             this.lbl_name.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_name.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_name.Location = new System.Drawing.Point(505, 107);
+            this.lbl_name.Location = new System.Drawing.Point(440, 107);
             this.lbl_name.Name = "lbl_name";
             this.lbl_name.Size = new System.Drawing.Size(0, 21);
             this.lbl_name.TabIndex = 1;
@@ -188,7 +190,7 @@
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 210);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 246);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -211,7 +213,7 @@
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView1.RowTemplate.Height = 75;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(880, 378);
+            this.dataGridView1.Size = new System.Drawing.Size(880, 342);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
@@ -220,6 +222,7 @@
             // 
             this.panel1.Controls.Add(this.lbl_remark);
             this.panel1.Controls.Add(this.remarkLabel);
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.lbl_lx);
             this.panel1.Controls.Add(this.label6);
@@ -227,6 +230,7 @@
             this.panel1.Controls.Add(this.lbl_name);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btn_print);
             this.panel1.Controls.Add(this.lbl_ddh);
             this.panel1.Controls.Add(this.lbl_time);
@@ -235,7 +239,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(906, 204);
+            this.panel1.Size = new System.Drawing.Size(906, 240);
             this.panel1.TabIndex = 11;
             // 
             // lbl_remark
@@ -243,7 +247,7 @@
             this.lbl_remark.AutoSize = true;
             this.lbl_remark.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_remark.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_remark.Location = new System.Drawing.Point(136, 169);
+            this.lbl_remark.Location = new System.Drawing.Point(127, 169);
             this.lbl_remark.Name = "lbl_remark";
             this.lbl_remark.Size = new System.Drawing.Size(0, 21);
             this.lbl_remark.TabIndex = 16;
@@ -254,7 +258,7 @@
             this.remarkLabel.BackColor = System.Drawing.SystemColors.Menu;
             this.remarkLabel.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.remarkLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.remarkLabel.Location = new System.Drawing.Point(68, 170);
+            this.remarkLabel.Location = new System.Drawing.Point(55, 170);
             this.remarkLabel.Name = "remarkLabel";
             this.remarkLabel.Size = new System.Drawing.Size(72, 20);
             this.remarkLabel.TabIndex = 15;
@@ -268,9 +272,9 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(695, 145);
+            this.button1.Location = new System.Drawing.Point(625, 144);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 46);
+            this.button1.Size = new System.Drawing.Size(149, 46);
             this.button1.TabIndex = 14;
             this.button1.Text = "计价打印";
             this.button1.UseVisualStyleBackColor = false;
@@ -281,7 +285,7 @@
             this.lbl_lx.AutoSize = true;
             this.lbl_lx.BackColor = System.Drawing.SystemColors.Menu;
             this.lbl_lx.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl_lx.Location = new System.Drawing.Point(136, 107);
+            this.lbl_lx.Location = new System.Drawing.Point(127, 106);
             this.lbl_lx.Name = "lbl_lx";
             this.lbl_lx.Size = new System.Drawing.Size(0, 21);
             this.lbl_lx.TabIndex = 13;
@@ -292,7 +296,7 @@
             this.label6.BackColor = System.Drawing.SystemColors.Menu;
             this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(68, 107);
+            this.label6.Location = new System.Drawing.Point(55, 107);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 20);
             this.label6.TabIndex = 12;
@@ -328,6 +332,38 @@
             this.btn_history.Text = "历史订单";
             this.btn_history.UseVisualStyleBackColor = false;
             this.btn_history.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(780, 191);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(107, 46);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "打印(存)";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.btn_print_ClickForStorage);
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.BackColor = System.Drawing.Color.MediumPurple;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Location = new System.Drawing.Point(625, 191);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(149, 46);
+            this.button3.TabIndex = 14;
+            this.button3.Text = "计价打印(存)";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button1_ClickForStorage);
             // 
             // MCS_DDLBForm
             // 
@@ -371,6 +407,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label remarkLabel;
         private System.Windows.Forms.Label lbl_remark;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
     }
 }
 

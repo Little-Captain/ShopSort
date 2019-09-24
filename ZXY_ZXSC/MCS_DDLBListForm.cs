@@ -132,6 +132,53 @@ namespace ZXY_ZXSC
             }
             catch { }
         }
+        //执行打印
+        private void printForStorage(DataRow[] myrows)//打印报表
+        {
+            try
+            {
+                DataRow[] pruduct = mytableDD.Select("订单号='" + txt_ddh.Text + "' and 分拣确认='已确认'");
+                for (int i = 0; i < pruduct.Length; i++)
+                {
+                    DataRow rows = tableProduct.NewRow();
+                    rows["产品编号"] = pruduct[i]["产品编号"].ToString();
+                    rows["产品名称"] = pruduct[i]["产品名称"].ToString();
+                    rows["计量单位"] = pruduct[i]["计量单位"].ToString();
+                    rows["实际单位"] = pruduct[i]["实际单位"].ToString();
+                    rows["下单数量"] = pruduct[i]["下单数量"].ToString();
+                    rows["分拣数量"] = pruduct[i]["分拣数量"].ToString();
+                    rows["产品编号"] = pruduct[i]["产品编号"].ToString();
+                    tableProduct.Rows.Add(rows);
+                }
+                DataTable myprinttable = myrows.CopyToDataTable();
+                try
+                {
+                    GridReportForm BForm = new GridReportForm();
+
+                    BForm.myprinttable = tableProduct;
+                    BForm.printtable = myprinttable;
+                    BForm.reportname = "dd_storage.grf";
+
+                    bool isPreview = true;
+                    try
+                    {
+                        isPreview = Convert.ToBoolean(ConfigApp.valueItem("PrintPreview"));
+                    }
+                    catch { }
+                    BForm.ptintview = isPreview;
+                    if (isPreview)
+                    {
+                        BForm.ShowDialog();
+                    }
+                    else
+                    {
+                        BForm.startPrint();
+                    }
+                }
+                catch { }
+            }
+            catch { }
+        }
         //请求接口
         private void requestGetJson(string url)
         {

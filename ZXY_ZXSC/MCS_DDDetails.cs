@@ -213,6 +213,49 @@ namespace ZXY_ZXSC
             }
             catch { }
         }
+        private void btn_print_ClickForStorage(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lbl_ddh.Text != "")
+                {
+                    DataTable cpPrint = mytableDD.Copy();
+                    DataRow[] myrows = null;
+
+                    myrows = cpPrint.Select();
+                    int num = 0;
+                    foreach (DataRow item in cpPrint.Rows)
+                    {
+                        num++;
+
+                        item["序号"] = num;
+                        item["单价"] = "";
+
+                        if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) >= 12)
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
+                        }
+
+                        string dw = item["分拣单位"].ToString();
+                        string fjsl = item["分拣数量"].ToString();
+                        item["分拣数量"] = fjsl + dw;
+                    }
+                    printForStorage(myrows);//打印报表
+                }
+                else
+                {
+                    MessageBox.Show("暂无订单！");
+                }
+
+            }
+            catch { }
+        }
         //打印方法
         private void print(DataRow[] myrows)//打印报表
         {
@@ -227,6 +270,41 @@ namespace ZXY_ZXSC
                     BForm.myprinttable = tableProduct;
                     BForm.printtable = myprinttable;
                     BForm.reportname = "dd.grf";
+
+                    bool isPreview = true;
+                    try
+                    {
+                        isPreview = Convert.ToBoolean(ConfigApp.valueItem("PrintPreview"));
+                    }
+                    catch { }
+                    BForm.ptintview = isPreview;
+                    if (isPreview)
+                    {
+                        BForm.ShowDialog();
+                    }
+                    else
+                    {
+                        BForm.startPrint();
+                    }
+                }
+                catch { }
+            }
+            catch { }
+        }
+        //打印方法
+        private void printForStorage(DataRow[] myrows)//打印报表
+        {
+            try
+            {
+
+                DataTable myprinttable = myrows.CopyToDataTable();
+                try
+                {
+                    GridReportForm BForm = new GridReportForm();
+
+                    BForm.myprinttable = tableProduct;
+                    BForm.printtable = myprinttable;
+                    BForm.reportname = "dd_storage.grf";
 
                     bool isPreview = true;
                     try
@@ -330,7 +408,58 @@ namespace ZXY_ZXSC
             }
             catch (Exception ex) { }
         }
+        private void button1_ClickForStorage(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lbl_ddh.Text != "")
+                {
+                    DataTable cpPrint = mytableDD.Copy();
+                    DataRow[] myrows = null;
+                    myrows = cpPrint.Select();
+                    int num = 0;
+                    DataRow lastRow = cpPrint.NewRow();
+                    lastRow["总价"] = (decimal)0;
+                    foreach (DataRow item in cpPrint.Rows)
+                    {
+                        num++;
+                        item["序号"] = num;
 
 
+                        if (int.Parse(DateTime.Parse(item["生产日期"].ToString()).Hour.ToString()) >= 12)
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).AddDays(1).ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            item["生产批号"] = item["产品编号"].ToString() + DateTime.Parse(item["生产日期"].ToString()).ToString("yyyyMMdd");
+                            item["生产日期"] = DateTime.Parse(item["生产日期"].ToString()).ToString("yyyy-MM-dd");
+                        }
+
+                        decimal mult = decimal.Parse(item["单价"].ToString()) * decimal.Parse(item["分拣数量"].ToString());
+
+                        item["总价"] = mult;
+
+                        lastRow["总价"] = decimal.Parse(lastRow["总价"].ToString()) + mult;
+
+                        string dw = item["分拣单位"].ToString();
+                        string fjsl = item["分拣数量"].ToString();
+                        item["分拣数量"] = fjsl + dw;
+                    }
+
+                    List<DataRow> list = new List<DataRow>();
+                    list.AddRange(myrows);
+                    list.Add(lastRow);
+                    printForStorage(list.ToArray());//打印报表
+                }
+                else
+                {
+                    MessageBox.Show("暂无订单！");
+                }
+
+            }
+            catch (Exception ex) { }
+        }
     }
 }
