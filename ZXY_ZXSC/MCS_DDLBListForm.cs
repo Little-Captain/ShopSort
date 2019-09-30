@@ -355,7 +355,7 @@ namespace ZXY_ZXSC
                 }
                 else
                 {
-                    mytj = "&employeeId=" + com_khmc.Text + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                    mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                 }
                 requestGetJson(url +mytj+ "&pageIndex=" + pageIndex + "&pageSize=" + pageSize);
             }
@@ -385,24 +385,24 @@ namespace ZXY_ZXSC
                     txt_ddh.Text = znFrm.strReturn;
                     if (txt_ddh.Text != "")
                     {
-                        if (com_khmc.Text.ToString() == "全部")
+                        if (com_khmc.SelectedValue.ToString() == "0")
                         {
                             mytj = "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                         }
                         else
                         {
-                            mytj = "&employeeId=" + com_khmc.Text + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                            mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                         }
                     }
                     else
                     {
-                        if (com_khmc.Text.ToString() == "全部")
+                        if (com_khmc.SelectedValue.ToString() == "0")
                         {
                             mytj = "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                         }
                         else
                         {
-                            mytj = "&employeeId=" + com_khmc.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                            mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                         }
 
                     }
@@ -417,24 +417,24 @@ namespace ZXY_ZXSC
             {
                 if (txt_ddh.Text != "")
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
@@ -465,24 +465,24 @@ namespace ZXY_ZXSC
             {
                 if (txt_ddh.Text != "")
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
@@ -511,24 +511,24 @@ namespace ZXY_ZXSC
             {
                 if (txt_ddh.Text != "")
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
@@ -557,24 +557,24 @@ namespace ZXY_ZXSC
             {
                 if (txt_ddh.Text != "")
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
                 {
-                    if (com_khmc.Text.ToString() == "全部")
+                    if (com_khmc.SelectedValue.ToString() == "0")
                     {
                         mytj = "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
