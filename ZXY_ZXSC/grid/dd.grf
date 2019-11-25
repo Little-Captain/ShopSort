@@ -621,7 +621,7 @@
 						Item[1,13]
 							TextAlign=MiddleCenter
 							Text='[#{下单时间}#]'
-							ColSpan=3
+							ColSpan=4
 						End
 						Item[2,1]
 							Object Font
@@ -636,7 +636,23 @@
 						End
 						Item[2,3]
 							Text='[#{地址}#]'
-							ColSpan=13
+							ColSpan=8
+						End
+						Item[2,11]
+							Object Font
+								Name='宋体'
+								Size=105000,0
+								Bold=T
+								Charset=134
+							End
+							TextAlign=MiddleCenter
+							Text='储存条件'
+							ColSpan=2
+						End
+						Item[2,13]
+							TextAlign=MiddleCenter
+							Text='冷藏'
+							ColSpan=4
 						End
 						Item[3,1]
 							Object Font
@@ -652,7 +668,7 @@
 						Item[3,3]
 							WordWrap=T
 							Text='[#{备注}#]'
-							ColSpan=13
+							ColSpan=14
 						End
 					End
 				End
