@@ -355,7 +355,7 @@ namespace ZXY_ZXSC
                 }
                 else
                 {
-                    mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                    mytj = "&departmentId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                 }
                 requestGetJson(url +mytj+ "&pageIndex=" + pageIndex + "&pageSize=" + pageSize);
             }
@@ -367,7 +367,7 @@ namespace ZXY_ZXSC
                 }
                 else
                 {
-                    mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                    mytj = "&departmentId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                 }
                 requestGetJson(url + mytj + "&pageIndex=" + pageIndex + "&pageSize=" + pageSize);
 
@@ -391,7 +391,7 @@ namespace ZXY_ZXSC
                         }
                         else
                         {
-                            mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                            mytj = "&departmentId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                         }
                     }
                     else
@@ -402,7 +402,7 @@ namespace ZXY_ZXSC
                         }
                         else
                         {
-                            mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                            mytj = "&departmentId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                         }
 
                     }
@@ -423,7 +423,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
@@ -434,7 +434,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
@@ -471,7 +471,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
@@ -482,7 +482,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
@@ -517,7 +517,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
@@ -528,7 +528,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
@@ -563,7 +563,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&OrderNo=" + txt_ddh.Text + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
                 }
                 else
@@ -574,7 +574,7 @@ namespace ZXY_ZXSC
                     }
                     else
                     {
-                        mytj = "&employeeId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
+                        mytj = "&departmentId=" + com_khmc.SelectedValue + "&startDate=" + startDate.Text + "&endDate=" + endDate.Text;
                     }
 
                 }
